@@ -18,103 +18,46 @@
       }
       
       .slide {
-        padding: 1.5rem;
-        min-height: 100vh;
-        justify-content: flex-start;
-        padding-top: 2rem;
-        padding-bottom: 4rem;
+        padding: 1rem;
+        padding-top: 1.5rem;
+        padding-bottom: 5rem;
+        min-height: auto;
       }
       
       .headline {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        margin-bottom: 0.8rem;
+        line-height: 1.1;
       }
       
       .subheadline {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
       }
       
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin: 1.5rem 0;
+        gap: 0.8rem;
+        margin: 1.2rem 0;
       }
       
       .stat-card {
-        padding: 1rem;
+        padding: 0.8rem;
       }
       
       .stat-number {
-        font-size: 2rem;
+        font-size: clamp(1.5rem, 6vw, 2rem);
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
       }
       
       .opportunity-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
-        margin: 1.5rem 0;
-      }
-      
-      .opportunity-card {
-        padding: 1rem;
-      }
-      
-      .acquisition-showcase {
-        grid-template-columns: repeat(2, 1fr);
         gap: 0.8rem;
-      }
-      
-      .firm-card {
-        padding: 0.8rem;
-      }
-      
-      .bullet-list {
-        margin: 1rem 0;
-      }
-      
-      .bullet-list li {
-        font-size: 1rem;
-        margin: 0.6rem 0;
-      }
-      
-      .tagline {
-        font-size: 0.8rem;
-        margin-top: 1rem;
-      }
-      
-      .pagination {
-        bottom: 1rem;
-        gap: 0.5rem;
-      }
-      
-      .dot {
-        width: 10px;
-        height: 10px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .slide {
-        padding: 1rem;
-        padding-top: 1.5rem;
-        padding-bottom: 4rem;
-      }
-      
-      .headline {
-        font-size: 2rem;
-      }
-      
-      .subheadline {
-        font-size: 1rem;
-      }
-      
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-      }
-      
-      .acquisition-showcase {
-        grid-template-columns: 1fr;
+        margin: 1.2rem 0;
       }
       
       .opportunity-card {
@@ -122,11 +65,112 @@
       }
       
       .opportunity-title {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
       }
       
       .opportunity-desc {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      
+      .acquisition-showcase {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+      }
+      
+      .firm-card {
+        padding: 0.6rem;
+      }
+      
+      .firm-name {
+        font-size: 0.8rem;
+      }
+      
+      .firm-revenue, .firm-price {
+        font-size: 0.75rem;
+      }
+      
+      .bullet-list {
+        margin: 1rem 0;
+        max-width: 100%;
+      }
+      
+      .bullet-list li {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        line-height: 1.4;
+      }
+      
+      .tagline {
+        font-size: 0.75rem;
+        margin-top: 1rem;
+        line-height: 1.3;
+      }
+      
+      .pagination {
+        position: fixed;
+        bottom: 1rem;
+        gap: 0.4rem;
+        z-index: 1000;
+      }
+      
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .slide {
+        padding: 0.8rem;
+        padding-top: 1rem;
+        padding-bottom: 4rem;
+      }
+      
+      .headline {
+        font-size: clamp(1.5rem, 9vw, 2rem);
+        margin-bottom: 0.6rem;
+      }
+      
+      .subheadline {
+        font-size: clamp(0.85rem, 4.5vw, 1rem);
+        margin-bottom: 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        margin: 1rem 0;
+      }
+      
+      .stat-card {
+        padding: 0.7rem;
+      }
+      
+      .acquisition-showcase {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      
+      .opportunity-card {
+        padding: 0.7rem;
+      }
+      
+      .opportunity-title {
+        font-size: 0.9rem;
+      }
+      
+      .opportunity-desc {
+        font-size: 0.75rem;
+      }
+      
+      .bullet-list li {
         font-size: 0.85rem;
+      }
+      
+      .tagline {
+        font-size: 0.7rem;
       }
     }
     
@@ -136,14 +180,15 @@
       justify-content: flex-start;
       align-items: center;
       min-height: 100vh;
+      max-height: none;
       padding: 3rem;
       padding-top: 2rem;
+      padding-bottom: 5rem;
       text-align: center;
       max-width: 1200px;
       margin: 0 auto;
       position: relative;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
     }
     
     .slide.active {
