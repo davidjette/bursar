@@ -133,15 +133,17 @@
     .slide {
       display: none;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       min-height: 100vh;
       padding: 3rem;
+      padding-top: 2rem;
       text-align: center;
       max-width: 1200px;
       margin: 0 auto;
       position: relative;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     
     .slide.active {
@@ -702,6 +704,34 @@
       if (e.key === 'Escape') {
         // Reset to first slide
         showSlide(0);
+      }
+    });
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
+
+    document.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', function(e) {
+      endX = e.changedTouches[0].clientX;
+      endY = e.changedTouches[0].clientY;
+      
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      
+      // Check if horizontal swipe is longer than vertical (to avoid conflicts with scrolling)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          previousSlide(); // Swipe right = previous slide
+        } else {
+          nextSlide(); // Swipe left = next slide
+        }
       }
     });
   </script>
