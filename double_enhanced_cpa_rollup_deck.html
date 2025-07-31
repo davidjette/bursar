@@ -12,19 +12,16 @@
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: #f8fafc;
       overflow: hidden;
+      height: 100vh;
+    }
     @media (max-width: 768px) {
       .nav-arrows {
         display: none;
       }
       
-      body {
-        height: 100vh;
-        overflow: hidden;
-      }
-      
       .slide-container {
         height: 100vh;
-        overflow-y: scroll;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
       
@@ -32,7 +29,8 @@
         padding: 1rem;
         padding-top: 1.5rem;
         padding-bottom: 5rem;
-        min-height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
       }
       
       .headline {
@@ -137,6 +135,8 @@
         padding: 0.8rem;
         padding-top: 1rem;
         padding-bottom: 4rem;
+        min-height: 100vh;
+        overflow-y: auto;
       }
       
       .headline {
@@ -199,6 +199,7 @@
       margin: 0 auto;
       position: relative;
       box-sizing: border-box;
+      overflow-y: auto;
     }
     
     .slide.active {
@@ -1048,22 +1049,6 @@
         }
       }
     });
-
-    // Reset scroll position when changing slides
-    function showSlide(n) {
-      slides.forEach(s => s.classList.remove('active'));
-      dots.forEach(d => d.classList.remove('active'));
-      
-      currentSlide = n;
-      slides[n].classList.add('active');
-      dots[n].classList.add('active');
-      
-      // Reset scroll to top of slide container
-      const slideContainer = document.querySelector('.slide-container');
-      if (slideContainer) {
-        slideContainer.scrollTop = 0;
-      }
-    }
   </script>
 </body>
 </html> + value + 'K';
@@ -1095,10 +1080,10 @@
         setTimeout(initializeGanttChart, 100);
       }
       
-      // Reset scroll to top of slide container
-      const slideContainer = document.querySelector('.slide-container');
-      if (slideContainer) {
-        slideContainer.scrollTop = 0;
+      // Reset scroll to top for current slide
+      const activeSlide = slides[n];
+      if (activeSlide) {
+        activeSlide.scrollTop = 0;
       }
     }
 
