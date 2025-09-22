@@ -805,22 +805,6 @@
         }
       }
     });
-
-    // Reset scroll position when changing slides
-    function showSlide(n) {
-      slides.forEach(s => s.classList.remove('active'));
-      dots.forEach(d => d.classList.remove('active'));
-      
-      currentSlide = n;
-      slides[n].classList.add('active');
-      dots[n].classList.add('active');
-      
-      // Reset scroll to top of slide container
-      const slideContainer = document.querySelector('.slide-container');
-      if (slideContainer) {
-        slideContainer.scrollTop = 0;
-      }
-    }
   </script>
 </body>
 </html>
