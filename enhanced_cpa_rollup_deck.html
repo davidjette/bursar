@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bursar - AI-Native CPA Rollup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+      overflow: hidden;
+    @media (max-width: 768px) {
+      .nav-arrows {
+        display: none;
+      }
+      
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+      
+      .slide-container {
+        height: 100vh;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .slide {
+        padding: 1rem;
+        padding-top: 1.5rem;
+        padding-bottom: 5rem;
+        min-height: auto;
+      }
+      
+      .headline {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        margin-bottom: 0.8rem;
+        line-height: 1.1;
+      }
+      
+      .subheadline {
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin: 1.2rem 0;
+      }
+      
+      .stat-card {
+        padding: 0.8rem;
+      }
+      
+      .stat-number {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
+      }
+      
+      .opportunity-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        margin: 1.2rem 0;
+      }
+      
+      .opportunity-card {
+        padding: 0.8rem;
+      }
+      
+      .opportunity-title {
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      .opportunity-desc {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      
+      .acquisition-showcase {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+      }
+      
+      .firm-card {
+        padding: 0.6rem;
+      }
+      
+      .firm-name {
+        font-size: 0.8rem;
+      }
+      
+      .firm-revenue, .firm-price {
+        font-size: 0.75rem;
+      }
+      
+      .bullet-list {
+        margin: 1rem 0;
+        max-width: 100%;
+      }
+      
+      .bullet-list li {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        line-height: 1.4;
+      }
+      
+      .tagline {
+        font-size: 0.75rem;
+        margin-top: 1rem;
+        line-height: 1.3;
+      }
+      
+      .pagination {
+        position: fixed;
+        bottom: 1rem;
+        gap: 0.4rem;
+        z-index: 1000;
+      }
+      
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .slide {
+        padding: 0.8rem;
+        padding-top: 1rem;
+        padding-bottom: 4rem;
+      }
+      
+      .headline {
+        font-size: clamp(1.5rem, 9vw, 2rem);
+        margin-bottom: 0.6rem;
+      }
+      
+      .subheadline {
+        font-size: clamp(0.85rem, 4.5vw, 1rem);
+        margin-bottom: 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        margin: 1rem 0;
+      }
+      
+      .stat-card {
+        padding: 0.7rem;
+      }
+      
+      .acquisition-showcase {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      
+      .opportunity-card {
+        padding: 0.7rem;
+      }
+      
+      .opportunity-title {
+        font-size: 0.9rem;
+      }
+      
+      .opportunity-desc {
+        font-size: 0.75rem;
+      }
+      
+      .bullet-list li {
+        font-size: 0.85rem;
+      }
+      
+      .tagline {
+        font-size: 0.7rem;
+      }
+    }
+    
+    .slide {
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      padding: 3rem;
+      padding-top: 2rem;
+      padding-bottom: 6rem;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      box-sizing: border-box;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    .headline {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    
+    .subheadline {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #cbd5e1;
+      line-height: 1.7;
+      max-width: 900px;
+      margin-bottom: 2rem;
+    }
+    
+    .tagline {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 800px;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #60a5fa;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 0.5rem;
+    }
+    
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .opportunity-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 1000px;
+    }
+    
+    .opportunity-card {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(52, 211, 153, 0.1) 100%);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: left;
+    }
+    
+    .opportunity-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 0.4rem;
+    }
+    
+    .opportunity-desc {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+    
+    .pagination {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background-color: #60a5fa;
+      transform: scale(1.2);
+    }
+    
+    .highlight {
+      color: #34d399;
+      font-weight: 600;
+    }
+    
+    .bullet-list {
+      text-align: left;
+      max-width: 700px;
+      margin: 1rem auto;
+    }
+    
+    .bullet-list li {
+      margin: 0.8rem 0;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+    
+    .nav-arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #cbd5e1;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-arrows:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #60a5fa;
+    }
+    
+    .nav-left {
+      left: 2rem;
+    }
+    
+    .nav-right {
+      right: 2rem;
+    }
+    
+
+    
+    .acquisition-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 900px;
+    }
+    
+    .firm-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .firm-name {
+      font-weight: 600;
+      color: #60a5fa;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .firm-revenue {
+      color: #34d399;
+      font-weight: 500;
+    }
+    
+    .firm-price {
+      color: #cbd5e1;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+  <!-- Slide 1: Vision & Impact -->
+  <div class="slide active">
+    <div class="headline">Bursar</div>
+    <div style="font-size: 2rem; font-weight: 600; color: #cbd5e1; margin-bottom: 1.5rem;">AI-Native National CPA Firm</div>
+    <div class="subheadline">
+      Bursar acquires small accounting practices and transforms them with intelligent automation, 
+      delivering the same trusted service clients expect—now with real-time responsiveness, 
+      unlimited scalability, and zero labor bottlenecks.
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">$147B</span>
+        <div class="stat-label">US Accounting Market</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">75%</span>
+        <div class="stat-label">CPAs Retiring Soon</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">340K</span>
+        <div class="stat-label">Fewer Accountants Today</div>
+      </div>
+    </div>
+    <div class="tagline">Sources: Statista 2023, AICPA 2024, Bureau of Labor Statistics 2024</div>
+  </div>
+
+  <!-- Slide 2: The Crisis & Opportunity -->
+  <div class="slide">
+    <div class="headline">A Perfect Storm Creates Unprecedented Opportunity</div>
+    <div class="subheadline">
+      The accounting profession faces its most dramatic transformation in decades. 
+      <span class="highlight">300,000+ professionals</span> have left the field since 2020, 
+      while <span class="highlight">75% of current CPAs</span> will retire within 15 years.
+    </div>
+    <div class="opportunity-grid">
+      <div class="opportunity-card">
+        <div class="opportunity-title">Labor Shortage Crisis</div>
+        <div class="opportunity-desc">Only 2.0% unemployment rate for accountants in Q4 2024. Firms taking 4-5 weeks to fill roles, with some positions vacant for months.</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Pipeline Collapse</div>
+        <div class="opportunity-desc">20% decline in accounting graduates since 2010. CPA exam candidates at lowest level since 2006.</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Succession Crisis</div>
+        <div class="opportunity-desc">Thousands of profitable firms with no succession plan. Owners desperate to retire but can't find buyers.</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Technology Lag</div>
+        <div class="opportunity-desc">Most small firms still operate on legacy systems. Manual workflows ripe for AI transformation.</div>
+      </div>
+    </div>
+    <div class="tagline">Sources: Kiplinger 2025, AICPA Pipeline Report 2023, CPA Journal 2025</div>
+  </div>
+
+  <!-- Slide 3: Market Size & Target -->
+  <div class="slide">
+    <div class="headline">Massive Addressable Market</div>
+    <div class="subheadline">
+      The US accounting market reached <span class="highlight">$147.5 billion</span> in 2023. 
+      Our focus: tens of thousands of firms under $3M in revenue representing <span class="highlight">$40B+</span> 
+      in aggregate revenue nationwide, with California as our testbed for scalable roll-up.
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">86,640</span>
+        <div class="stat-label">Total Accounting Firms</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">~45,500</span>
+        <div class="stat-label">Small CPA Firms Nationwide</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">1.2x</span>
+        <div class="stat-label">Average Price Multiple</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">52%</span>
+        <div class="stat-label">Average EBITDA Margin</div>
+      </div>
+    </div>
+    <div class="tagline">Sources: IBISWorld 2024, Inside Public Accounting 2023</div>
+  </div>
+
+  <!-- Slide 4: Real Acquisition Examples -->
+  <div class="slide">
+    <div class="headline">Live Acquisition Pipeline</div>
+    <div class="subheadline">
+      Our analysis of available California firms shows consistent patterns: 
+      profitable practices at <span class="highlight">1.0-1.3x revenue multiples</span>, 
+      strong client bases, minimal technology adoption.
+    </div>
+    <div class="acquisition-showcase">
+      <div class="firm-card">
+        <div class="firm-name">Torrance Practice</div>
+        <div class="firm-revenue">$1.13M Revenue</div>
+        <div class="firm-price">$1.30M Price (1.15x)</div>
+      </div>
+      <div class="firm-card">
+        <div class="firm-name">San Diego Firm</div>
+        <div class="firm-revenue">$485K Revenue</div>
+        <div class="firm-price">$593K Price (1.22x)</div>
+      </div>
+      <div class="firm-card">
+        <div class="firm-name">Orange County CPA</div>
+        <div class="firm-revenue">$315K Revenue</div>
+        <div class="firm-price">$410K Price (1.30x)</div>
+      </div>
+      <div class="firm-card">
+        <div class="firm-name">Inland Empire Practice</div>
+        <div class="firm-revenue">$278K Revenue</div>
+        <div class="firm-price">$295K Price (1.06x)</div>
+      </div>
+    </div>
+    <div class="tagline">Source: ATB California firm listings, analyzed Q4 2024</div>
+  </div>
+
+  <!-- Slide 5: AI-Native Platform Vision -->
+  <div class="slide">
+    <div class="headline">Bursar's Always-On CPA Platform</div>
+    <div class="subheadline">
+      Bursar isn't building software for accountants—we're becoming the accountant. 
+      Our platform handles the complete workflow from client intake to tax filing, 
+      with AI managing 80% of routine tasks and licensed CPAs overseeing high-value work.
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Intelligent Workflow Automation:</strong> AI-powered tax prep, document processing, and compliance checks</li>
+      <li><strong>Unified Client Portal:</strong> Real-time communication, document sharing, and status tracking</li>
+      <li><strong>Smart Triage System:</strong> AI handles routine queries, escalates complex issues to licensed staff</li>
+      <li><strong>Centralized Oversight:</strong> National dashboard for compliance, quality control, and performance monitoring</li>
+      <li><strong>Automated Bookkeeping:</strong> Transaction categorization, reconciliation, and financial reporting</li>
+    </ul>
+    <div class="tagline">AI-powered workflow platform replaces up to 80% of manual staff functions across tax prep, bookkeeping, and client support. Powered by proprietary triage, reconciliation, and document intelligence modules.</div>
+  </div>
+
+  <!-- Slide 6: Client Experience Revolution -->
+  <div class="slide">
+    <div class="headline">The Client Experience Difference</div>
+    <div class="subheadline">
+      Current reality: clients wait weeks for responses,<br>
+      pay for unlimited scope creep,<br>
+      and struggle with inconsistent service.<br><br>
+      Our model: instant responses, transparent pricing, predictable outcomes.
+    </div>
+    <div class="opportunity-grid">
+      <div class="opportunity-card">
+        <div class="opportunity-title">Before: Manual Bottlenecks</div>
+        <div class="opportunity-desc">Fixed-price contracts leading to unlimited client demands and scope creep issues</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">After: Bursar's AI-Powered Efficiency</div>
+        <div class="opportunity-desc">24/7 client portal, instant document processing, real-time status updates</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Before: Scope Creep</div>
+        <div class="opportunity-desc">Clients demanding extensive services for flat fees with unclear boundaries</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">After: Bursar's Smart Service Tiers</div>
+        <div class="opportunity-desc">AI manages service boundaries, upsells advisory services automatically</div>
+      </div>
+    </div>
+    <div class="tagline">Source: David Devin CPA interview transcript, 2024</div>
+  </div>
+
+  <!-- Slide 7: Compliance & Trust -->
+  <div class="slide">
+    <div class="headline">Licensed Excellence at Scale</div>
+    <div class="subheadline">
+      Bursar's compliance framework ensures every engagement meets CPA standards 
+      through smart audit trails, delegated digital workflows, and retained 
+      licensing via earnout agreements with acquired firm principals.
+    </div>
+    <div class="opportunity-grid">
+      <div class="opportunity-card">
+        <div class="opportunity-title">Smart Audit Trails</div>
+        <div class="opportunity-desc">Every AI decision logged and reviewable by licensed CPAs for full transparency</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Delegated Digital Workflows</div>
+        <div class="opportunity-desc">Rule-based approval systems ensure proper oversight without bottlenecks</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Licensing Retention Strategy</div>
+        <div class="opportunity-desc">Earnout-phase CPAs maintain state licenses while transitioning to oversight roles</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Ethical Automation Governance</div>
+        <div class="opportunity-desc">Bursar retains licensed CPAs for oversight and applies a human-in-the-loop system to review and sign off all client-sensitive outputs, preserving trust and accountability at scale.</div>
+      </div>
+    </div>
+    <div class="tagline">CPA licensing secured via earnout participation and transition agreements; audit trail logs reviewed and signed by licensed professionals.</div>
+  </div>
+
+  <!-- Slide 8: Go-To-Market Strategy -->
+  <div class="slide">
+    <div class="headline">Systematic Rollup Execution</div>
+    <div class="subheadline">
+      Phase 1: Acquire 5-10 California firms via broker networks and direct outreach. 
+      Phase 2: Standardize operations and validate unit economics. 
+      Phase 3: Scale nationally with proven playbook.
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Acquisition Sources:</strong> ATB Listing brokers, state CPA society networks, direct owner outreach</li>
+      <li><strong>Integration Timeline:</strong> 60-90 day platform migration with concierge client communication</li>
+      <li><strong>Revenue Growth:</strong> 20-40% increase through advisory upsells, efficiency gains, and pricing optimization</li>
+      <li><strong>Risk Mitigation:</strong> Seller-maintained client relationships during transition, seller training on new systems, performance guarantees tied to earnout milestones</li>
+    </ul>
+    <div class="tagline">Based on over 50 recent small firm deals in California, average multiples range from 1.0x–1.3x revenue; integration playbook derived from proven models in dental, MSP, and veterinary roll-ups.</div>
+  </div>
+
+  <!-- Slide 9: Financial Projections -->
+  <div class="slide">
+    <div class="headline">Unit Economics & Growth Model</div>
+    <div class="subheadline">
+      Target firms: $500K average revenue, 1.2x purchase multiple, 
+      40% margin improvement through automation. 
+      IRR target: <span class="highlight">35-50%</span> over 5 years.
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">$600K</span>
+        <div class="stat-label">Avg Acquisition Cost</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">+20%</span>
+        <div class="stat-label">Revenue Growth (Yr 1)</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">40%</span>
+        <div class="stat-label">Post-AI EBITDA Margin</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">42%</span>
+        <div class="stat-label">Target IRR</div>
+      </div>
+    </div>
+    <div class="tagline">Modeled return assumes 1.2x purchase multiple, 3-firm roll-up, margin doubling through automation, and exit at 2.0x revenue multiple by Year 5.</div>
+  </div>
+
+  <!-- Slide 10: The Vision -->
+  <div class="slide">
+    <div class="headline">Building the Future of Accounting</div>
+    <div class="subheadline">
+      Bursar's vision: <span class="highlight">"An in-house accountant that's always available 
+      and never misses a deadline, at a price any business can afford."</span> 
+      We're creating the largest AI-enabled CPA firm in America, 
+      serving 100,000+ clients by 2030.
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">2030</span>
+        <div class="stat-label">National Scale Target</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">100K+</span>
+        <div class="stat-label">Clients Served</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">$500M</span>
+        <div class="stat-label">Revenue Target</div>
+      </div>
+    </div>
+    <div class="tagline">[PLACEHOLDER: Vision statement and growth targets to be refined]</div>
+  </div>
+
+  <!-- Slide 11: Call to Action -->
+  <div class="slide">
+    <div class="headline">Join Bursar's Transformation</div>
+    <div class="subheadline">
+      Bursar is seeking strategic investors and acquisition partners 
+      to build the future of accounting. This is the moment to 
+      capitalize on the largest disruption in professional services history.
+    </div>
+    <div class="opportunity-grid">
+      <div class="opportunity-card">
+        <div class="opportunity-title">Seeking Investment</div>
+        <div class="opportunity-desc">$5-10M Series A to fund initial acquisitions and platform development</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Acquisition Partners</div>
+        <div class="opportunity-desc">Connect us with retiring CPA firm owners ready for succession solutions</div>
+      </div>
+      <div class="opportunity-card">
+        <div class="opportunity-title">Strategic Advisors</div>
+        <div class="opportunity-desc">Industry veterans to guide regulatory strategy and market expansion</div>
+      </div>
+    </div>
+    <div class="tagline">[PLACEHOLDER: Investment terms and partnership structure TBD]</div>
+  </div>
+
+  </div> <!-- Close slide-container -->
+
+  <!-- Navigation -->
+  <button class="nav-arrows nav-left" onclick="previousSlide()">‹</button>
+  <button class="nav-arrows nav-right" onclick="nextSlide()">›</button>
+
+  <div class="pagination">
+    <div class="dot active" onclick="showSlide(0)"></div>
+    <div class="dot" onclick="showSlide(1)"></div>
+    <div class="dot" onclick="showSlide(2)"></div>
+    <div class="dot" onclick="showSlide(3)"></div>
+    <div class="dot" onclick="showSlide(4)"></div>
+    <div class="dot" onclick="showSlide(5)"></div>
+    <div class="dot" onclick="showSlide(6)"></div>
+    <div class="dot" onclick="showSlide(7)"></div>
+    <div class="dot" onclick="showSlide(8)"></div>
+    <div class="dot" onclick="showSlide(9)"></div>
+    <div class="dot" onclick="showSlide(10)"></div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      
+      currentSlide = n;
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      
+      // Reset scroll to top of slide container
+      const slideContainer = document.querySelector('.slide-container');
+      if (slideContainer) {
+        slideContainer.scrollTop = 0;
+      }
+    }
+
+    function nextSlide() {
+      const next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }
+
+    function previousSlide() {
+      const prev = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(prev);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        previousSlide();
+      }
+    });
+
+    // Auto-advance on spacebar
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        // Reset to first slide
+        showSlide(0);
+      }
+    });
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
+
+    document.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', function(e) {
+      endX = e.changedTouches[0].clientX;
+      endY = e.changedTouches[0].clientY;
+      
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      
+      // Check if horizontal swipe is longer than vertical (to avoid conflicts with scrolling)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          previousSlide(); // Swipe right = previous slide
+        } else {
+          nextSlide(); // Swipe left = next slide
+        }
+      }
+    });
+
+    // Reset scroll position when changing slides
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      
+      currentSlide = n;
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      
+      // Reset scroll to top of slide container
+      const slideContainer = document.querySelector('.slide-container');
+      if (slideContainer) {
+        slideContainer.scrollTop = 0;
+      }
+    }
+  </script>
+</body>
+</html>
