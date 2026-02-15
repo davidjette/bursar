@@ -158,6 +158,8 @@ function startAudit() {
   const savedQ = loadProgress();
   const hasProgress = Object.keys(answers).length > 0;
 
+  auditStartTime = Date.now();
+  ga('audit_start', { event_label: 'start_button' });
   document.getElementById('intro').classList.remove('active');
   document.getElementById('audit-main').style.display = 'block';
   document.getElementById('q-total').textContent = QUESTIONS.length;
@@ -224,6 +226,12 @@ function selectOption(qId, optIdx) {
   });
   document.getElementById('next-btn').disabled = false;
 
+  // Track progress milestones
+  const qNum = currentQ + 1;
+  if ([5, 10, 15].includes(qNum)) {
+    ga('audit_progress', { progress_milestone: qNum, progress_percentage: (qNum / 20) * 100, time_spent_seconds: elapsed() });
+  }
+
   // Auto-advance after short delay
   setTimeout(() => {
     if (currentQ < QUESTIONS.length - 1) nextQ();
@@ -289,6 +297,17 @@ function showResults() {
   const { earned, possible, pct, gaps } = calculateScore();
   const zone = pct >= 80 ? 'Green' : pct >= 50 ? 'Yellow' : 'Red';
   const utm = typeof getUTM === 'function' ? getUTM() : {};
+
+  // GA4: email submitted + audit complete
+  const emailDomain = email.split('@')[1] || '';
+  ga('audit_email_submitted', { event_label: 'email_capture', email_domain: emailDomain, time_to_email_seconds: elapsed() });
+
+  const gapCats = [...new Set(gaps.map(g => g.cat))];
+  ga('audit_complete', {
+    event_label: 'results_shown', compliance_score: pct, compliance_zone: zone.toLowerCase(),
+    risk_areas_count: gapCats.length, risk_areas: gapCats.join(', '), time_to_complete_seconds: elapsed(),
+    value: pct,
+  });
 
   submitData('audit', {
     ...info, scorePct: pct, scoreEarned: earned, scorePossible: possible,
@@ -495,6 +514,18 @@ function handleCheckout(zone, price) {
     });
   }
 }
+
+// Fire landing view on load
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gtag !== 'undefined') gtag('event', 'audit_landing_view', { event_category: 'audit_funnel' });
+});
+
+// GA4 event helpers
+function ga(event, params) {
+  if (typeof gtag !== 'undefined') gtag('event', event, { event_category: 'audit_funnel', ...params });
+}
+let auditStartTime = 0;
+function elapsed() { return auditStartTime ? Math.floor((Date.now() - auditStartTime) / 1000) : 0; }
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
