@@ -7,7 +7,7 @@
  */
 
 // Google Apps Script Web App URL — set after deploying
-const BURSAR_SUBMIT_URL = '';
+const BURSAR_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbxvrlKheXIwhJXrj7JkMO_psllPvQacJbrgI9veBpMC4gf2pBSqX38UoQMBpkz0dgna/exec';
 
 async function submitData(type, data) {
   if (!BURSAR_SUBMIT_URL) {
