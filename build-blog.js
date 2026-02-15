@@ -103,23 +103,23 @@ function postPage(post) {
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
-  <a href="/bursar/" class="logo">Bursar</a>
+  <a href="/" class="logo">Bursar</a>
   <div class="nav-links">
-    <a href="/bursar/blog/" class="nav-link">Blog</a>
-    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
-    <a href="/bursar/wireframes/" class="nav-link">Product</a>
-    <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+    <a href="/audit/" class="nav-link">Free Audit</a>
+    <a href="/wireframes/" class="nav-link">Product</a>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>
 <article class="post">
-  <a href="/bursar/blog/" class="back-link">← Back to Blog</a>
+  <a href="/blog/" class="back-link">← Back to Blog</a>
   <h1>${post.title}</h1>
   <div class="post-meta">${niceDate} · ${post.author}${tags}</div>
   <div class="post-body">${cleanBody}</div>
   <div class="post-cta">
     <h3>Is your HOA board compliant?</h3>
     <p>Take our free 5-minute compliance assessment and get personalized results.</p>
-    <a href="/bursar/audit/" class="nav-cta" style="display:inline-block;text-decoration:none;padding:12px 28px;">Take Free Audit →</a>
+    <a href="/audit/" class="nav-cta" style="display:inline-block;text-decoration:none;padding:12px 28px;">Take Free Audit →</a>
   </div>
 </article>
 <footer class="footer"><p>© 2026 Bursar · Purpose-built for California HOA boards</p></footer>
@@ -130,12 +130,12 @@ function postPage(post) {
 function indexPage(posts) {
   const cards = posts.map(p => `
     <article style="padding:32px 0;border-bottom:1px solid var(--border);">
-      <a href="/bursar/blog/${p.slug}.html" style="text-decoration:none;">
+      <a href="/blog/${p.slug}.html" style="text-decoration:none;">
         <h3 style="color:var(--primary);font-size:1.25rem;margin-bottom:8px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;">${p.title}</h3>
       </a>
       <div style="color:var(--text-muted);font-size:0.8rem;margin-bottom:10px;font-weight:500;">${formatDate(p.date)} · ${p.author}</div>
       <p style="color:var(--text-secondary);font-size:0.95rem;margin-bottom:12px;line-height:1.65;">${p.excerpt}</p>
-      <a href="/bursar/blog/${p.slug}.html" style="color:var(--accent);font-size:0.9rem;font-weight:500;text-decoration:none;">Read article →</a>
+      <a href="/blog/${p.slug}.html" style="color:var(--accent);font-size:0.9rem;font-weight:500;text-decoration:none;">Read article →</a>
     </article>`).join('\n');
 
   return `<!DOCTYPE html>
@@ -146,17 +146,17 @@ function indexPage(posts) {
   <title>Blog — Bursar</title>
   <meta name="description" content="Insights for California HOA board members on compliance, operations, and best practices.">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="alternate" type="application/rss+xml" href="/bursar/blog/feed.xml" title="Bursar Blog">
+  <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml" title="Bursar Blog">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
-  <a href="/bursar/" class="logo">Bursar</a>
+  <a href="/" class="logo">Bursar</a>
   <div class="nav-links">
-    <a href="/bursar/blog/" class="nav-link">Blog</a>
-    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
-    <a href="/bursar/wireframes/" class="nav-link">Product</a>
-    <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+    <a href="/audit/" class="nav-link">Free Audit</a>
+    <a href="/wireframes/" class="nav-link">Product</a>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>
 <div style="max-width:680px;margin:0 auto;padding:120px 24px 80px;">

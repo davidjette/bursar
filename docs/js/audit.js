@@ -421,7 +421,7 @@ function animateScore(target) {
 
 function shareResults(pct, zone) {
   const text = `I just scored ${pct}% on the Bursar HOA Compliance Audit. How does your board stack up?`;
-  const url = window.location.origin + '/bursar/audit/';
+  const url = window.location.origin + '/audit/';
   if (navigator.share) {
     navigator.share({ title: 'HOA Compliance Audit Results', text, url });
   } else {
