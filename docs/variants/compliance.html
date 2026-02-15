@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bursar — Is Your HOA Board Compliant?</title>
+  <meta name="description" content="California's Davis-Stirling compliance requirements are complex. One missed deadline can expose board members to personal liability. Bursar automates compliance.">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .liability-list { max-width: 700px; margin: 0 auto 40px; text-align: left; }
+    .liability-list li {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      color: var(--text-light); font-size: 1rem;
+    }
+    .liability-list li strong { color: var(--text); }
+    .liability-list li code { font-size: 0.85rem; color: var(--text-muted); background: var(--bg-alt); padding: 2px 6px; border-radius: 4px; }
+    .risk-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto 40px; }
+    .risk-card { background: #fff5f5; border: 1px solid #fed7d7; border-radius: var(--radius); padding: 20px; text-align: center; }
+    .risk-card .icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .risk-card p { color: var(--danger); font-weight: 600; font-size: 0.95rem; }
+    .audit-cta { background: var(--success); }
+    .audit-cta:hover { background: #2f8a5a; }
+  </style>
+</head>
+<body data-variant="c-compliance">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">Bursar</a>
+    <a href="#audit" class="nav-cta audit-cta">Free Compliance Audit</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Is Your Board Personally Liable for Missing a Davis-Stirling Deadline?</h1>
+  <p class="subhead">California's HOA compliance requirements are complex, constantly updated, and easy to miss. One missed annual disclosure or late reserve study can expose board members to personal liability.</p>
+  <form class="cta-box waitlist-form" id="audit">
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit" class="audit-cta">Get Free Compliance Audit</button>
+  </form>
+  <p class="cta-note">Takes 5 minutes · See where your board stands</p>
+  <div class="success-msg"></div>
+</section>
+
+<section class="pain">
+  <div class="pain-inner">
+    <h2>Your Legal Obligations as a Board Member</h2>
+    <p class="subtitle">As a California HOA board member, you're personally responsible for:</p>
+    <ul class="liability-list">
+      <li><strong>Annual budget disclosures</strong> <code>Civil Code §5300</code></li>
+      <li><strong>Reserve study updates</strong> every 3 years <code>§5550</code></li>
+      <li><strong>Election compliance</strong> <code>§5100–5145</code></li>
+      <li><strong>Meeting notice requirements</strong> <code>§4920</code></li>
+      <li><strong>Document requests</strong> within specific timeframes <code>§5200</code></li>
+      <li><strong>Insurance certificates</strong> on file and current</li>
+    </ul>
+
+    <h2 style="margin-bottom: 20px;">Miss One? You Risk:</h2>
+    <div class="risk-cards">
+      <div class="risk-card">
+        <div class="icon">⚖️</div>
+        <p>Homeowner Lawsuits</p>
+      </div>
+      <div class="risk-card">
+        <div class="icon">🏛️</div>
+        <p>State Penalties</p>
+      </div>
+      <div class="risk-card">
+        <div class="icon">👤</div>
+        <p>Personal Liability</p>
+      </div>
+      <div class="risk-card">
+        <div class="icon">🛡️</div>
+        <p>Loss of D&O Coverage</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="features-inner">
+    <h2>Automated Compliance Protection</h2>
+
+    <div class="feature-row">
+      <div class="feature-icon">📅</div>
+      <div class="feature-text">
+        <h3>Davis-Stirling Compliance Calendar</h3>
+        <p>Every deadline your board is responsible for, tracked automatically. Reminders sent 30, 14, and 7 days before due dates.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">📄</div>
+      <div class="feature-text">
+        <h3>Auto-Generated Disclosure Templates</h3>
+        <p>Annual budget disclosures, reserve study summaries, election notices — generated from your data, ready to send.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">✅</div>
+      <div class="feature-text">
+        <h3>Compliance Dashboard</h3>
+        <p>See at a glance: what's current, what's due soon, what's overdue. No more guessing if you're compliant.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-text">
+        <h3>Audit Trail for Everything</h3>
+        <p>When a homeowner or lawyer asks "when did you send that?", you'll have timestamped proof of every notice, disclosure, and document delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <blockquote>"Our HOA attorney said our compliance record was the cleanest she'd seen in 15 years. Bursar made it automatic."</blockquote>
+  <cite>— Board President, California HOA</cite>
+</section>
+
+<section class="pricing">
+  <h2>Simple, Per-Seat Pricing</h2>
+  <div class="price">$35<span style="font-size:1.2rem;font-weight:400">/seat/month</span></div>
+  <p class="price-note">Cancel anytime · No long-term contracts</p>
+  <p class="price-example">Most boards: 5–7 seats → $175–$245/month for the whole board</p>
+</section>
+
+<section class="trust">
+  <div class="trust-badges">
+    <span>🏛️ Davis-Stirling Compliant</span>
+    <span>🔒 Bank-Level Encryption</span>
+    <span>📋 No Long-Term Contracts</span>
+    <span>⚖️ Attorney-Endorsed</span>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <h2>Find Out If Your Board Is Exposed</h2>
+  <p>Take our free 5-minute compliance audit — see exactly where you stand.</p>
+  <form class="cta-box waitlist-form">
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit" class="audit-cta">Get Free Compliance Audit</button>
+  </form>
+  <div class="success-msg"></div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 Bursar · Purpose-built for California HOA boards · Davis-Stirling compliance automation</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

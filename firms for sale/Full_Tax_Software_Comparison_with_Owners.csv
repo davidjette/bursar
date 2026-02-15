@@ -1,0 +1,14 @@
+Software,Core Functionality,Deployment,APIs,Integrations,AI Integration,Owned By
+ProSeries,Desktop forms & e-file,Desktop/cloud-host,Minimal/no REST API,"QuickBooks, DMS, portals",No,Intuit
+GoSystem,Enterprise tax prep,Desktop/web,"Full REST JSON API (e-file, binder, import/export)","SurePrep, TaxCaddy",No,Thomson Reuters
+TaxTools,Planning & forms,Desktop,Sales-tax REST API,E-commerce systems,No,"CFS Tax Software, Inc."
+Lacerte,Complex return prep,Desktop/cloud-host,SDK (ODBC/.NET),"DMS, portals, time & billing",No,Intuit
+Drake,"Fast, multiuser desktop prep",Desktop/cloud RDP,"Import/export API, automation bot","DMS, accounting, portals",Article only; no built-in AI,Drake Software
+QuickBooks,"Accounting (bookkeeping, invoicing, payroll, expense tracking)",Desktop/Cloud,"QBO has robust APIs, desktop limited","QBO integrates with 3rd-party tools, banking APIs, CRMs",None specific to tax prep,Intuit
+Xero,"Cloud accounting: invoicing, bank feeds, payroll, AR/AP, reporting",Cloud,Open APIs via Xero developer platform,"Integrates with Hubdoc, banks, e-commerce platforms",Some automation tools use AI; not core product,Xero Limited
+TimeSlips,Time-tracking and billing for professional services,Desktop,"No public APIs, but integrates with legal billing standards","Integrates with LEDES formats, legal billing systems",No,Sage Group plc
+MS Office Products,"Office suite: Word, Excel, PowerPoint",Desktop,No APIs,Macro/scripting integrations only,No,Microsoft
+Client Write-Up,"Write-up system for GL, payroll, reporting",Desktop,Imports/exports via internal tools,"Imports from Excel, QuickBooks",No,"Various (e.g., Dillner’s, ProSystems, PCS)"
+ShareFile,Secure file sharing and DMS,Cloud,"Zapier integrations, internal automation APIs","Connects with IRS portals, Zapier, DMS tools","AI-driven workflows, autofill, document loops",Cloud Software Group (formerly Citrix Systems)
+Edrawer,Document retention and retrieval,Desktop,None,None documented,No,Likely independent or niche vendor (unverified)
+BNA,Tax planning and compliance tools,Desktop,"Limited automation, no open APIs",Imports/exports to tax software ecosystems,Automated depreciation and compliance workflows,Bloomberg L.P.
