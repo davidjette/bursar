@@ -245,8 +245,7 @@ function nextQ() {
 }
 
 function showEmailGate() {
-  document.getElementById('questions').innerHTML = '';
-  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('audit-main').style.display = 'none';
   const gate = document.getElementById('email-gate');
   gate.classList.add('active');
   gate.querySelector('input[type="email"]').focus();
@@ -303,6 +302,7 @@ function showResults() {
   }
 
   document.getElementById('email-gate').classList.remove('active');
+  document.getElementById('email-gate').style.display = 'none';
 
   let zoneClass, headline, verdict, ctaText, ctaClass;
   if (pct >= 80) {
@@ -417,6 +417,7 @@ function shareResults(pct, zone) {
 // Payment / Success Screen
 function showPayment(zone, pct) {
   document.getElementById('results').classList.remove('active');
+  document.getElementById('results').style.display = 'none';
   const payment = document.getElementById('payment');
   payment.classList.add('active');
 
