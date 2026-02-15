@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Bursar Blog</title>
+  <link>https://davidjette.github.io/bursar/blog/</link>
+  <description>Insights for California HOA board members</description>
+  <language>en-us</language>
+  
+    <item>
+      <title><![CDATA[Is Your California HOA Board Compliant? A Davis-Stirling Checklist]]></title>
+      <link>https://davidjette.github.io/bursar/blog/hoa-board-compliance-checklist.html</link>
+      <description><![CDATA[California's Davis-Stirling Act requires HOA boards to track dozens of compliance deadlines. Miss one and you could face personal liability. Use this checklist to ensure your board stays compliant.]]></description>
+      <pubDate>Sat, 14 Feb 2026 00:00:00 GMT</pubDate>
+      <guid>https://davidjette.github.io/bursar/blog/hoa-board-compliance-checklist.html</guid>
+    </item>
+
+    <item>
+      <title><![CDATA[Welcome to Bursar — Built for California HOA Boards]]></title>
+      <link>https://davidjette.github.io/bursar/blog/welcome-to-bursar.html</link>
+      <description><![CDATA[We're building the operations platform California HOA board members deserve. Here's why.]]></description>
+      <pubDate>Sat, 14 Feb 2026 00:00:00 GMT</pubDate>
+      <guid>https://davidjette.github.io/bursar/blog/welcome-to-bursar.html</guid>
+    </item>
+</channel>
+</rss>

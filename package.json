@@ -1,0 +1,27 @@
+{
+  "name": "bursar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "notion-fetcher.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidjette/bursar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidjette/bursar/issues"
+  },
+  "homepage": "https://github.com/davidjette/bursar#readme",
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "marked": "^17.0.2"
+  }
+}
