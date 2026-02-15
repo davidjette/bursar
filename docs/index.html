@@ -6,51 +6,72 @@
   <title>Bursar — HOA Board Management for California</title>
   <meta name="description" content="Stop drowning in invoices. Bursar is purpose-built for California HOA boards — invoice approval, compliance calendar, and document management in one place.">
   <link rel="stylesheet" href="css/style.css">
-  <!-- GA4 placeholder -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
 </head>
 <body data-variant="b-invoice">
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="logo">Bursar</a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="/bursar/" class="logo">Bursar</a>
+    <div class="nav-links">
+      <a href="/bursar/blog/" class="nav-link">Blog</a>
+      <a href="/bursar/audit/" class="nav-link">Free Audit</a>
+      <a href="/bursar/wireframes/" class="nav-link">Product</a>
+      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>70+ Invoices. 6 Hours Every Week.<br>There's a Better Way.</h1>
-  <p class="subhead">If you're spending your weekends matching invoices to bids, chasing co-signers, and worrying about fraud — Bursar is built for you.</p>
-  <form class="cta-box waitlist-form" id="waitlist">
-    <input type="email" placeholder="Enter your email" required>
-    <button type="submit">Join Waitlist</button>
-  </form>
-  <p class="cta-note">Launching for California boards · $35/seat/month · Cancel anytime</p>
-  <div class="success-msg"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Now accepting California boards</div>
+    <h1>Stop Losing Weekends to <span class="gradient-text">Invoice Hell</span></h1>
+    <p class="subhead">70+ invoices. 6 hours every week. Zero audit trail. If you're a volunteer HOA board member doing bookkeeper work for free — there's a better way.</p>
+    <form class="cta-box waitlist-form" id="waitlist">
+      <input type="email" placeholder="Enter your work email" required>
+      <button type="submit">Join Waitlist →</button>
+    </form>
+    <p class="cta-note">Free for early access · $35/seat/month after · Cancel anytime</p>
+    <div class="success-msg"></div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-bar">
+  <div class="proof-inner">
+    <div class="proof-stat"><div class="num">50,000+</div><div class="label">HOAs in California</div></div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat"><div class="num">70%</div><div class="label">Are self-managed</div></div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat"><div class="num">0</div><div class="label">Tools built for them</div></div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat"><div class="num">$0</div><div class="label">Compensation for volunteers</div></div>
+  </div>
 </section>
 
 <!-- PAIN POINTS -->
 <section class="pain">
   <div class="pain-inner">
-    <h2>You're a Volunteer, Not a Bookkeeper</h2>
-    <p class="subtitle">Every month, board treasurers waste hours on work that should take minutes.</p>
+    <div class="section-label fade-up">The problem</div>
+    <h2 class="section-title fade-up">You're a Volunteer, Not a Bookkeeper</h2>
+    <p class="section-subtitle fade-up">Every month, board treasurers waste hours on work that should take minutes.</p>
     <div class="pain-grid">
-      <div class="pain-card">
+      <div class="pain-card fade-up">
         <div class="num">70+</div>
-        <p>invoices from vendors, contractors, and service providers every month</p>
+        <p>invoices from vendors, contractors, and service providers every single month</p>
       </div>
-      <div class="pain-card">
-        <div class="num">6 hrs</div>
-        <p>spent hunting down co-signers and matching invoices to approved bids</p>
+      <div class="pain-card fade-up">
+        <div class="num">6hrs</div>
+        <p>spent matching invoices to bids, chasing co-signers, and processing payments</p>
       </div>
-      <div class="pain-card">
+      <div class="pain-card fade-up">
         <div class="num">0</div>
-        <p>audit trail — no way to prove who approved what or when</p>
+        <p>audit trail — no way to prove who approved what, when, or why</p>
       </div>
-      <div class="pain-card">
+      <div class="pain-card fade-up">
         <div class="num">$0</div>
-        <p>compensation — you're doing all this for free</p>
+        <p>compensation — you're doing all of this work completely for free</p>
       </div>
     </div>
   </div>
@@ -59,45 +80,39 @@
 <!-- FEATURES -->
 <section class="features">
   <div class="features-inner">
-    <h2>The Bursar Solution</h2>
-
-    <div class="feature-row">
-      <div class="feature-icon">📱</div>
-      <div class="feature-text">
-        <h3>Mobile Approval in Minutes</h3>
-        <p>Review and approve invoices from your phone. All bids, contracts, and approval history in context — no digging through email.</p>
+    <div class="section-label fade-up">The solution</div>
+    <h2 class="section-title fade-up">Everything Your Board Needs, Nothing It Doesn't</h2>
+    <p class="section-subtitle fade-up">Purpose-built for California HOA boards. Not property managers.</p>
+    <div class="feature-grid">
+      <div class="feature-card fade-up">
+        <div class="icon">📱</div>
+        <h3>Mobile Invoice Approval</h3>
+        <p>Review and approve from your phone in minutes. Two-signer auth, photo verification, and full audit trail built in.</p>
       </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">✍️</div>
-      <div class="feature-text">
-        <h3>Two-Signer Auth, Automated</h3>
-        <p>Bursar notifies your co-signer automatically. They approve with a tap. No more "did you sign this yet?" texts.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">📸</div>
-      <div class="feature-text">
-        <h3>Photo Verification</h3>
-        <p>Vendors upload photos of completed work before invoices get approved. Visual proof tied to every payment.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">🛡️</div>
-      <div class="feature-text">
+      <div class="feature-card fade-up">
+        <div class="icon">🛡️</div>
         <h3>AI Fraud Detection</h3>
         <p>Duplicate invoices, unusual amounts, and vendor pattern changes flagged automatically before you approve.</p>
       </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">📅</div>
-      <div class="feature-text">
-        <h3>Davis-Stirling Compliance Calendar</h3>
-        <p>Never miss a compliance deadline again. Automated reminders for annual disclosures, elections, reserve studies, and meeting requirements.</p>
+      <div class="feature-card fade-up">
+        <div class="icon">📅</div>
+        <h3>Davis-Stirling Compliance</h3>
+        <p>Never miss a deadline. Automated calendar for all disclosures, elections, reserve studies, and meeting requirements.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="icon">🗂️</div>
+        <h3>Document Vault</h3>
+        <p>All governing docs, contracts, and minutes in one searchable place. Version control and delivery receipts included.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="icon">📊</div>
+        <h3>Board Dashboard</h3>
+        <p>Financial health, pending actions, and compliance status at a glance. No accounting degree required.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="icon">🤝</div>
+        <h3>Meeting Intelligence</h3>
+        <p>Auto-generate agendas, capture minutes, track motions and votes. Compliance-ready meeting records.</p>
       </div>
     </div>
   </div>
@@ -105,16 +120,66 @@
 
 <!-- TESTIMONIAL -->
 <section class="testimonial">
-  <blockquote>"I used to spend my entire Saturday morning on invoices. Now I knock them out in 45 minutes on Friday night. Game changer."</blockquote>
-  <cite>— Board Treasurer, 240-Unit California HOA</cite>
+  <div class="testimonial-content fade-up">
+    <div class="quote-mark">"</div>
+    <blockquote>I used to spend my entire Saturday morning on invoices. Now I knock them out in 45 minutes on Friday night. The compliance calendar alone is worth the subscription.</blockquote>
+    <cite>Scott Shipley</cite>
+    <div class="cite-role">Board President · 240-Unit California HOA</div>
+  </div>
 </section>
 
 <!-- PRICING -->
-<section class="pricing">
-  <h2>Simple, Per-Seat Pricing</h2>
-  <div class="price">$35<span style="font-size:1.2rem;font-weight:400">/seat/month</span></div>
-  <p class="price-note">Cancel anytime · No long-term contracts</p>
-  <p class="price-example">Most boards: 5–7 seats → $175–$245/month for the whole board</p>
+<section class="pricing" id="pricing">
+  <div class="section-label fade-up">Simple pricing</div>
+  <h2 class="section-title fade-up">One Plan. No Surprises.</h2>
+  <p class="section-subtitle fade-up">Everything included. No feature gates, no hidden fees.</p>
+
+  <div class="pricing-card fade-up">
+    <div class="popular">EARLY ACCESS</div>
+    <div class="price">$35<span>/seat/month</span></div>
+    <p class="price-note">Cancel anytime · No long-term contracts</p>
+    <ul class="pricing-features">
+      <li><span class="check">✓</span> Invoice approval with two-signer auth</li>
+      <li><span class="check">✓</span> AI fraud detection &amp; photo verification</li>
+      <li><span class="check">✓</span> Davis-Stirling compliance calendar</li>
+      <li><span class="check">✓</span> Document vault with version control</li>
+      <li><span class="check">✓</span> Board dashboard &amp; financial reports</li>
+      <li><span class="check">✓</span> Meeting management &amp; auto-minutes</li>
+      <li><span class="check">✓</span> Unlimited members &amp; homeowners</li>
+      <li><span class="check">✓</span> Priority support</li>
+    </ul>
+    <a href="#waitlist" class="pricing-cta">Join Waitlist →</a>
+    <p class="pricing-example">Most boards: 5–7 seats → $175–$245/month total</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <div class="section-label fade-up">Questions</div>
+    <h2 class="section-title fade-up" style="margin-bottom:40px;">Frequently Asked</h2>
+
+    <div class="faq-item fade-up">
+      <button class="faq-q">Is this for property managers or board members? <span class="arrow">▼</span></button>
+      <div class="faq-a">Board members. Bursar is built for self-managed HOAs where volunteers run the board. If you have a property manager, Bursar works alongside them and makes their life easier too.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <button class="faq-q">What if we only have 5 board members? <span class="arrow">▼</span></button>
+      <div class="faq-a">Perfect. Most of our early boards are 5-7 seats. Total cost: $175-$245/month for the entire board. That's less than one hour of HOA attorney time.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <button class="faq-q">What makes this different from AppFolio or PayHOA? <span class="arrow">▼</span></button>
+      <div class="faq-a">AppFolio is built for property management companies, requires 50+ units, and doesn't do California compliance. PayHOA is good but lacks invoice approval workflows and Davis-Stirling automation. Bursar is the only platform built specifically for California boards.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <button class="faq-q">Do you handle Davis-Stirling compliance? <span class="arrow">▼</span></button>
+      <div class="faq-a">Yes — it's our core differentiator. Automated tracking for all Davis-Stirling deadlines: budget disclosures (§5300), reserve studies (§5550), election procedures (§5100-5145), meeting notices (§4920), policy statements (§5310), and more. No other platform does this.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <button class="faq-q">When does Bursar launch? <span class="arrow">▼</span></button>
+      <div class="faq-a">We're onboarding California boards in early 2026. Join the waitlist to get early access and help shape the product. First 50 boards get founding member pricing.</div>
+    </div>
+  </div>
 </section>
 
 <!-- TRUST -->
@@ -129,28 +194,71 @@
 
 <!-- BOTTOM CTA -->
 <section class="bottom-cta">
-  <h2>Stop Wasting Weekends on Invoice Hell</h2>
-  <p>Join California HOA boards already on the Bursar waitlist.</p>
-  <form class="cta-box waitlist-form">
-    <input type="email" placeholder="Enter your email" required>
-    <button type="submit">Join Waitlist</button>
-  </form>
-  <div class="success-msg"></div>
+  <div class="bottom-cta-content fade-up">
+    <h2>Your Board Deserves Better Tools</h2>
+    <p>Join California HOA boards already on the waitlist. First 50 boards get founding member pricing.</p>
+    <form class="cta-box waitlist-form">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Join Waitlist →</button>
+    </form>
+    <div class="success-msg"></div>
+    <p class="cta-note" style="color:rgba(148,163,184,0.7);">No spam. Unsubscribe anytime.</p>
+  </div>
 </section>
 
+<!-- VARIANT NAV -->
 <div class="variant-nav">
   <p>Explore Bursar:</p>
   <a href="/bursar/variants/platform.html">Platform Overview</a>
   <a href="/bursar/variants/compliance.html">Compliance</a>
   <a href="/bursar/audit/">Free Audit</a>
   <a href="/bursar/blog/">Blog</a>
+  <a href="/bursar/wireframes/">Product Demo</a>
 </div>
 
 <footer class="footer">
   <p>© 2026 Bursar · Purpose-built for California HOA boards</p>
 </footer>
 
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-inner">
+    <p>Ready to stop wasting weekends? →</p>
+    <form class="cta-box waitlist-form" style="max-width:340px;">
+      <input type="email" placeholder="Your email" required>
+      <button type="submit">Join Waitlist</button>
+    </form>
+  </div>
+</div>
+
 <script src="js/submit.js"></script>
 <script src="js/main.js"></script>
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Sticky CTA
+const sticky = document.getElementById('stickyCta');
+const heroForm = document.getElementById('waitlist');
+const stickyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    sticky.classList.toggle('visible', !e.isIntersecting);
+  });
+}, { threshold: 0 });
+if (heroForm) stickyObserver.observe(heroForm);
+</script>
 </body>
 </html>
