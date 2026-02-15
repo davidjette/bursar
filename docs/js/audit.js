@@ -371,7 +371,7 @@ function showResults() {
       ` : '<p class="no-gaps">No compliance gaps detected. Keep up the great work!</p>'}
 
       <div class="results-actions">
-        <a href="/bursar/#waitlist" class="results-cta ${ctaClass}">${ctaText}</a>
+        <button onclick="showPayment('${zone}', ${pct})" class="results-cta ${ctaClass}" style="border:none;cursor:pointer;">${ctaText}</button>
         <button class="results-share" onclick="shareResults(${pct}, '${zone}')">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v4h16v-4M12 3v10M8 7l4-4 4 4"/></svg>
           Share with Your Board
@@ -410,6 +410,87 @@ function shareResults(pct, zone) {
       const btn = document.querySelector('.results-share');
       btn.textContent = '✓ Link copied!';
       setTimeout(() => { btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v4h16v-4M12 3v10M8 7l4-4 4 4"/></svg> Share with Your Board'; }, 2000);
+    });
+  }
+}
+
+// Payment / Success Screen
+function showPayment(zone, pct) {
+  document.getElementById('results').classList.remove('active');
+  const payment = document.getElementById('payment');
+  payment.classList.add('active');
+
+  const isRed = zone === 'Red';
+  const isYellow = zone === 'Yellow';
+
+  const planName = isRed ? 'Priority Compliance Package' : isYellow ? 'Compliance Accelerator' : 'Compliance Maintenance';
+  const price = isRed ? '149' : isYellow ? '99' : '49';
+  const tagline = isRed
+    ? 'Your board scored ' + pct + '% — get back on track fast with priority onboarding.'
+    : isYellow
+    ? 'Close your compliance gaps before they become problems.'
+    : 'Stay ahead with automated compliance monitoring.';
+
+  const features = isRed ? [
+    'Priority onboarding within 48 hours',
+    'Full Davis-Stirling compliance remediation plan',
+    'Document templates for every gap identified',
+    'Dedicated compliance advisor for 90 days',
+    'Automated compliance monitoring dashboard',
+    'Board training session (1 hour)',
+  ] : isYellow ? [
+    'Onboarding within 1 week',
+    'Targeted remediation plan for your gaps',
+    'Document templates for gaps identified',
+    'Compliance monitoring dashboard',
+    'Email support for 60 days',
+    'Quarterly compliance check-ins',
+  ] : [
+    'Automated compliance monitoring',
+    'Annual compliance audit refresh',
+    'Document template library access',
+    'Email alerts for regulatory changes',
+    'Community best practices newsletter',
+  ];
+
+  payment.innerHTML = `
+    <div class="payment-container">
+      <div class="payment-success-icon">🎯</div>
+      <div class="payment-badge">Recommended for your score</div>
+      <h2 class="payment-title">${planName}</h2>
+      <p class="payment-sub">${tagline}</p>
+
+      <div class="payment-card">
+        <div class="payment-card-header">
+          <span class="payment-card-title">${planName}</span>
+          <span class="payment-card-price">$${price}<span>/mo</span></span>
+        </div>
+        <ul class="payment-features">
+          ${features.map(f => '<li>' + f + '</li>').join('')}
+        </ul>
+      </div>
+
+      <button class="payment-btn" onclick="handleCheckout('${zone}', ${price})">
+        Get Started — $${price}/mo
+      </button>
+      <p class="payment-note">🔒 Secure checkout · Cancel anytime · 30-day money-back guarantee</p>
+    </div>
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handleCheckout(zone, price) {
+  // TODO: Connect Stripe Checkout here
+  // For now, show a placeholder
+  const btn = document.querySelector('.payment-btn');
+  btn.textContent = '✓ Stripe checkout coming soon!';
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'begin_checkout', {
+      event_category: 'conversion', event_label: zone, value: price,
     });
   }
 }
