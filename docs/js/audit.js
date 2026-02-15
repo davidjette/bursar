@@ -1,4 +1,4 @@
-// Bursar Compliance Audit — Question Engine
+// Bursar Compliance Audit — Typeform-Style Question Engine
 const QUESTIONS = [
   { id: 1, cat: 'Financial Reporting', q: 'Does your board send the annual budget disclosure to all members 45-60 days before your fiscal year begins?', ref: 'Civil Code §5300', opts: [
     { text: 'Yes, every year on time', pts: 5 },
@@ -125,69 +125,132 @@ const QUESTIONS = [
   ]},
 ];
 
-let currentQ = -1; // -1 = intro
+// State
+let currentQ = -1;
 const answers = {};
+const STORAGE_KEY = 'bursar_audit';
 
-function startAudit() {
-  document.getElementById('intro').classList.remove('active');
-  document.getElementById('progress-wrap').style.display = 'block';
-  document.getElementById('q-total').textContent = QUESTIONS.length;
-  currentQ = 0;
-  renderQuestion();
+// Restore saved progress
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      Object.assign(answers, data.answers || {});
+      return data.currentQ || 0;
+    }
+  } catch(e) {}
+  return 0;
 }
 
-function renderQuestion() {
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentQ, answers }));
+  } catch(e) {}
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+// Initialize
+function startAudit() {
+  const savedQ = loadProgress();
+  const hasProgress = Object.keys(answers).length > 0;
+
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('audit-main').style.display = 'block';
+  document.getElementById('q-total').textContent = QUESTIONS.length;
+
+  currentQ = hasProgress ? savedQ : 0;
+  renderQuestion('forward');
+}
+
+function renderQuestion(direction) {
   const q = QUESTIONS[currentQ];
   document.getElementById('q-num').textContent = currentQ + 1;
-  document.getElementById('progress-bar').style.width = ((currentQ + 1) / QUESTIONS.length * 100) + '%';
+  const pct = ((currentQ + 1) / QUESTIONS.length * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-cat').textContent = q.cat;
 
   const container = document.getElementById('questions');
+  const slideClass = direction === 'forward' ? 'slide-in-right' : 'slide-in-left';
+
   container.innerHTML = `
-    <div class="question active">
-      <div class="category">${q.cat}</div>
-      <h2>${q.q}</h2>
-      ${q.ref ? `<div class="ref">${q.ref}</div>` : ''}
-      <div class="options">
+    <div class="tf-question ${slideClass}">
+      <div class="tf-meta">
+        <span class="tf-cat">${q.cat}</span>
+        <span class="tf-qnum">${currentQ + 1} of ${QUESTIONS.length}</span>
+      </div>
+      <h2 class="tf-title">${q.q}</h2>
+      ${q.ref ? `<p class="tf-ref">${q.ref}</p>` : ''}
+      <div class="tf-options">
         ${q.opts.map((o, i) => `
-          <div class="option ${answers[q.id] === i ? 'selected' : ''}" onclick="selectOption(${q.id}, ${i})">
-            <div class="dot"></div>
-            <span>${o.text}</span>
-          </div>
+          <button class="tf-option ${answers[q.id] === i ? 'selected' : ''}"
+                  onclick="selectOption(${q.id}, ${i})" data-idx="${i}">
+            <span class="tf-key">${String.fromCharCode(65 + i)}</span>
+            <span class="tf-option-text">${o.text}</span>
+            <span class="tf-check">✓</span>
+          </button>
         `).join('')}
       </div>
-      <div class="q-nav">
-        <button class="btn btn-back" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>← Back</button>
-        <button class="btn btn-next" id="next-btn" onclick="nextQ()" ${answers[q.id] === undefined ? 'disabled' : ''}>${currentQ === QUESTIONS.length - 1 ? 'See Results' : 'Next →'}</button>
+      <div class="tf-nav">
+        <button class="tf-btn-back" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
+          Back
+        </button>
+        <button class="tf-btn-next" id="next-btn" onclick="nextQ()" ${answers[q.id] === undefined ? 'disabled' : ''}>
+          ${currentQ === QUESTIONS.length - 1 ? 'See Results' : 'Next'}
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg>
+        </button>
       </div>
+      <p class="tf-hint">Press <kbd>A</kbd>-<kbd>${String.fromCharCode(65 + q.opts.length - 1)}</kbd> to select, <kbd>Enter</kbd> to continue</p>
     </div>
   `;
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    const el = container.querySelector('.tf-question');
+    if (el) el.classList.add('visible');
+  });
+
+  saveProgress();
 }
 
 function selectOption(qId, optIdx) {
   answers[qId] = optIdx;
-  document.querySelectorAll('.option').forEach((el, i) => {
+  document.querySelectorAll('.tf-option').forEach((el, i) => {
     el.classList.toggle('selected', i === optIdx);
   });
   document.getElementById('next-btn').disabled = false;
+
+  // Auto-advance after short delay
+  setTimeout(() => {
+    if (currentQ < QUESTIONS.length - 1) nextQ();
+  }, 400);
 }
 
 function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQuestion(); }
+  if (currentQ > 0) { currentQ--; renderQuestion('back'); }
 }
 
 function nextQ() {
   if (answers[QUESTIONS[currentQ].id] === undefined) return;
   if (currentQ < QUESTIONS.length - 1) {
     currentQ++;
-    renderQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderQuestion('forward');
   } else {
-    // Show email gate
-    document.getElementById('questions').innerHTML = '';
-    document.getElementById('progress-wrap').style.display = 'none';
-    document.getElementById('email-gate').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showEmailGate();
   }
+}
+
+function showEmailGate() {
+  document.getElementById('questions').innerHTML = '';
+  document.getElementById('progress-wrap').style.display = 'none';
+  const gate = document.getElementById('email-gate');
+  gate.classList.add('active');
+  gate.querySelector('input[type="email"]').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function calculateScore() {
@@ -197,7 +260,7 @@ function calculateScore() {
     const optIdx = answers[q.id];
     if (optIdx === undefined) return;
     const opt = q.opts[optIdx];
-    if (opt.pts === -1) return; // N/A
+    if (opt.pts === -1) return;
     possible += 5;
     earned += opt.pts;
     if (opt.pts < 5) {
@@ -210,7 +273,11 @@ function calculateScore() {
 
 function showResults() {
   const email = document.getElementById('field-email').value;
-  if (!email) { document.getElementById('field-email').style.borderColor = '#e53e3e'; return; }
+  if (!email || !email.includes('@')) {
+    document.getElementById('field-email').style.borderColor = '#e53e3e';
+    document.getElementById('field-email').focus();
+    return;
+  }
 
   const info = {
     name: document.getElementById('field-name').value,
@@ -220,68 +287,154 @@ function showResults() {
     city: document.getElementById('field-city').value,
   };
 
-  // Submit to backend
   const { earned, possible, pct, gaps } = calculateScore();
   const zone = pct >= 80 ? 'Green' : pct >= 50 ? 'Yellow' : 'Red';
   const utm = typeof getUTM === 'function' ? getUTM() : {};
+
   submitData('audit', {
     ...info, scorePct: pct, scoreEarned: earned, scorePossible: possible,
     zone, gapCount: gaps.length, answers, ...utm,
   });
 
-  // Track conversion
   if (typeof gtag !== 'undefined') {
     gtag('event', 'compliance_audit_complete', {
-      event_category: 'conversion',
-      event_label: 'audit',
-      value: 1,
+      event_category: 'conversion', event_label: zone, value: pct,
     });
   }
 
   document.getElementById('email-gate').classList.remove('active');
 
-  let zone, zoneClass, headline, verdict;
+  let zoneClass, headline, verdict, ctaText, ctaClass;
   if (pct >= 80) {
-    zone = 'Green'; zoneClass = 'score-green';
-    headline = '✅ Your Board Is In Good Shape';
+    zoneClass = 'zone-green';
+    headline = 'Your Board Is In Good Shape';
     verdict = 'Congratulations! Your HOA board is meeting most Davis-Stirling Act compliance requirements. You\'re ahead of the majority of California HOAs.';
+    ctaText = 'Stay Compliant with Bursar';
+    ctaClass = 'cta-green';
   } else if (pct >= 50) {
-    zone = 'Yellow'; zoneClass = 'score-yellow';
-    headline = '⚠️ Your Board Has Compliance Gaps';
+    zoneClass = 'zone-yellow';
+    headline = 'Your Board Has Compliance Gaps';
     verdict = 'Your board is meeting some requirements but has gaps that could lead to problems. You\'re not alone — most boards score in this range.';
+    ctaText = 'Close Your Gaps with Bursar';
+    ctaClass = 'cta-yellow';
   } else {
-    zone = 'Red'; zoneClass = 'score-red';
-    headline = '🚨 Immediate Action Needed';
+    zoneClass = 'zone-red';
+    headline = 'Immediate Action Needed';
     verdict = 'Your board has significant compliance gaps that expose you to legal and financial risk. These need to be addressed urgently.';
+    ctaText = 'Get Priority Access to Bursar';
+    ctaClass = 'cta-red';
   }
 
   const gapHtml = gaps
     .sort((a, b) => a.pts - b.pts)
     .map(g => {
-      const cls = g.pts === 0 ? 'gap-red' : 'gap-yellow';
-      return `<div class="gap-item ${cls}">
-        <div><div class="gap-label">${g.cat}${g.ref ? ' — ' + g.ref : ''}</div>
-        <div class="gap-text">${g.q}</div>
-        <div class="gap-text" style="margin-top:4px;"><em>Your answer: ${g.answer}</em></div></div>
+      const severity = g.pts === 0 ? 'critical' : 'moderate';
+      return `<div class="gap-card gap-${severity}">
+        <div class="gap-header">
+          <span class="gap-severity">${severity === 'critical' ? '🔴 Critical' : '🟡 Moderate'}</span>
+          <span class="gap-cat">${g.cat}</span>
+        </div>
+        <p class="gap-question">${g.q}</p>
+        ${g.ref ? `<p class="gap-ref">${g.ref}</p>` : ''}
+        <p class="gap-answer">Your answer: <em>${g.answer}</em></p>
       </div>`;
     }).join('');
 
-  document.getElementById('results').classList.add('active');
-  document.getElementById('results').innerHTML = `
-    <div class="score-circle ${zoneClass}">
-      ${pct}%
-      <div class="label">${earned}/${possible} pts</div>
-    </div>
-    <h2>${headline}</h2>
-    <p class="verdict">${verdict}</p>
-    ${gaps.length > 0 ? `
-      <h3 style="font-size:1.1rem;color:var(--primary);margin-bottom:16px;">Your Compliance Gaps (${gaps.length})</h3>
-      <div class="gap-list">${gapHtml}</div>
-    ` : ''}
-    <div class="results-cta">
-      <a href="/bursar/#waitlist" class="btn btn-next" style="text-decoration:none;display:inline-block;">Join the Bursar Waitlist</a>
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:12px;">We'll email your detailed results to ${email}</p>
+  const results = document.getElementById('results');
+  results.classList.add('active');
+  results.innerHTML = `
+    <div class="results-container">
+      <div class="score-reveal ${zoneClass}">
+        <div class="score-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+            <circle cx="60" cy="60" r="54" fill="none" stroke="#fff" stroke-width="8"
+              stroke-dasharray="${Math.round(339.3 * pct / 100)} 339.3"
+              stroke-linecap="round" transform="rotate(-90 60 60)"
+              class="score-ring-fill"/>
+          </svg>
+          <div class="score-number">
+            <span class="score-pct" data-target="${pct}">0</span>%
+          </div>
+        </div>
+        <p class="score-detail">${earned} of ${possible} points</p>
+      </div>
+
+      <h2 class="results-headline">${headline}</h2>
+      <p class="results-verdict">${verdict}</p>
+
+      ${gaps.length > 0 ? `
+        <div class="gaps-section">
+          <h3 class="gaps-title">${gaps.length} Compliance Gap${gaps.length !== 1 ? 's' : ''} Found</h3>
+          <div class="gaps-grid">${gapHtml}</div>
+        </div>
+      ` : '<p class="no-gaps">No compliance gaps detected. Keep up the great work!</p>'}
+
+      <div class="results-actions">
+        <a href="/bursar/#waitlist" class="results-cta ${ctaClass}">${ctaText}</a>
+        <button class="results-share" onclick="shareResults(${pct}, '${zone}')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v4h16v-4M12 3v10M8 7l4-4 4 4"/></svg>
+          Share with Your Board
+        </button>
+      </div>
+
+      <p class="results-email-note">We'll send your detailed results to <strong>${email}</strong></p>
     </div>
   `;
+
+  // Animate score counter
+  animateScore(pct);
+  clearProgress();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function animateScore(target) {
+  const el = document.querySelector('.score-pct');
+  if (!el) return;
+  let current = 0;
+  const step = Math.max(1, Math.floor(target / 40));
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current;
+    if (current >= target) clearInterval(timer);
+  }, 30);
+}
+
+function shareResults(pct, zone) {
+  const text = `I just scored ${pct}% on the Bursar HOA Compliance Audit. How does your board stack up?`;
+  const url = window.location.origin + '/bursar/audit/';
+  if (navigator.share) {
+    navigator.share({ title: 'HOA Compliance Audit Results', text, url });
+  } else {
+    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+      const btn = document.querySelector('.results-share');
+      btn.textContent = '✓ Link copied!';
+      setTimeout(() => { btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v4h16v-4M12 3v10M8 7l4-4 4 4"/></svg> Share with Your Board'; }, 2000);
+    });
+  }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (currentQ < 0) return;
+  if (document.getElementById('email-gate').classList.contains('active')) {
+    if (e.key === 'Enter') { showResults(); e.preventDefault(); }
+    return;
+  }
+  if (document.getElementById('results').classList.contains('active')) return;
+
+  const q = QUESTIONS[currentQ];
+  if (!q) return;
+
+  // A-Z keys to select options
+  const keyIdx = e.key.toUpperCase().charCodeAt(0) - 65;
+  if (keyIdx >= 0 && keyIdx < q.opts.length && !e.ctrlKey && !e.metaKey) {
+    selectOption(q.id, keyIdx);
+    e.preventDefault();
+    return;
+  }
+
+  if (e.key === 'Enter') { nextQ(); e.preventDefault(); }
+  if (e.key === 'ArrowLeft' || e.key === 'Backspace') { prevQ(); e.preventDefault(); }
+  if (e.key === 'ArrowRight') { nextQ(); e.preventDefault(); }
+});

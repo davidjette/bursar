@@ -6,82 +6,7 @@
   <title>Free HOA Compliance Audit — Bursar</title>
   <meta name="description" content="Take our free 5-minute Davis-Stirling compliance audit. See exactly where your California HOA board stands.">
   <link rel="stylesheet" href="../css/style.css">
-  <style>
-    .audit-wrap { max-width: 680px; margin: 0 auto; padding: 120px 24px 80px; }
-    .audit-wrap h1 { font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
-    .audit-intro { color: var(--text-light); margin-bottom: 32px; }
-
-    /* Progress */
-    .progress { background: var(--border); border-radius: 20px; height: 8px; margin-bottom: 32px; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--accent); border-radius: 20px; transition: width 0.4s ease; }
-    .progress-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
-
-    /* Question */
-    .question { display: none; }
-    .question.active { display: block; }
-    .question h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 6px; line-height: 1.4; }
-    .question .category { font-size: 0.8rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .question .ref { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-
-    /* Options */
-    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-    .option {
-      padding: 14px 18px; border: 2px solid var(--border); border-radius: var(--radius);
-      cursor: pointer; transition: all 0.2s; font-size: 0.95rem; color: var(--text);
-      display: flex; align-items: center; gap: 12px;
-    }
-    .option:hover { border-color: var(--primary-light); background: var(--bg-alt); }
-    .option.selected { border-color: var(--primary); background: #eef2f9; }
-    .option .dot {
-      width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border);
-      flex-shrink: 0; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
-    }
-    .option.selected .dot { border-color: var(--primary); background: var(--primary); }
-    .option.selected .dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
-
-    /* Nav */
-    .q-nav { display: flex; justify-content: space-between; align-items: center; }
-    .btn { padding: 12px 28px; border-radius: var(--radius); font-weight: 600; font-size: 0.95rem; cursor: pointer; border: none; transition: all 0.2s; }
-    .btn-next { background: var(--primary); color: #fff; }
-    .btn-next:hover { background: var(--primary-light); }
-    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
-    .btn-back { background: transparent; color: var(--text-muted); }
-    .btn-back:hover { color: var(--text); }
-
-    /* Email gate */
-    .email-gate { display: none; }
-    .email-gate.active { display: block; }
-    .email-gate h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 8px; }
-    .email-gate p { color: var(--text-light); margin-bottom: 24px; }
-    .email-gate input { width: 100%; padding: 14px 18px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 1rem; margin-bottom: 10px; }
-    .email-gate input:focus { outline: none; border-color: var(--primary-light); }
-    .email-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-    @media (max-width: 480px) { .email-fields { grid-template-columns: 1fr; } }
-
-    /* Results */
-    .results { display: none; }
-    .results.active { display: block; }
-    .score-circle {
-      width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 24px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-size: 2.8rem; font-weight: 800; color: #fff;
-    }
-    .score-circle .label { font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
-    .score-green { background: linear-gradient(135deg, #38a169, #48bb78); }
-    .score-yellow { background: linear-gradient(135deg, #d69e2e, #ecc94b); }
-    .score-red { background: linear-gradient(135deg, #e53e3e, #fc8181); }
-    .results h2 { text-align: center; font-size: 1.6rem; color: var(--primary); margin-bottom: 12px; }
-    .results .verdict { text-align: center; color: var(--text-light); margin-bottom: 32px; font-size: 1.05rem; }
-    .gap-list { margin-bottom: 32px; }
-    .gap-item { padding: 14px 18px; border-radius: var(--radius); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
-    .gap-red { background: #fff5f5; border-left: 3px solid var(--danger); }
-    .gap-yellow { background: #fffff0; border-left: 3px solid #d69e2e; }
-    .gap-green { background: #f0fff4; border-left: 3px solid var(--success); }
-    .gap-item .gap-label { font-weight: 600; font-size: 0.9rem; }
-    .gap-item .gap-text { font-size: 0.85rem; color: var(--text-light); }
-    .results-cta { text-align: center; margin-top: 36px; }
-    .results-cta .btn { font-size: 1.1rem; padding: 16px 36px; }
-  </style>
+  <link rel="stylesheet" href="../css/audit.css">
 </head>
 <body data-variant="compliance-audit">
 
@@ -90,46 +15,70 @@
   <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
 </div></nav>
 
-<div class="audit-wrap">
-  <!-- Intro -->
-  <div id="intro" class="question active">
-    <h1>Is Your HOA Board Compliant?</h1>
-    <p class="audit-intro">Take our free 5-minute Davis-Stirling compliance audit. 20 questions, personalized results, and specific recommendations for your board.</p>
-    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:24px;">Covers: financial reporting, meeting procedures, document management, insurance, reserves, elections, and more.</p>
-    <button class="btn btn-next" onclick="startAudit()" style="width:100%;font-size:1.1rem;padding:16px;">Start Free Audit</button>
-  </div>
-
-  <!-- Progress -->
-  <div id="progress-wrap" style="display:none;">
-    <div class="progress-label">Question <span id="q-num">1</span> of <span id="q-total">20</span></div>
-    <div class="progress"><div class="progress-bar" id="progress-bar" style="width:5%"></div></div>
-  </div>
-
-  <!-- Questions container -->
-  <div id="questions"></div>
-
-  <!-- Email gate -->
-  <div id="email-gate" class="email-gate">
-    <h2>Your Results Are Ready</h2>
-    <p>Enter your info to see your personalized compliance score and recommendations.</p>
-    <div class="email-fields">
-      <input type="text" id="field-name" placeholder="First name">
-      <input type="text" id="field-role" placeholder="Role (e.g. Treasurer)">
+<!-- Intro Screen -->
+<div id="intro" class="tf-screen active">
+  <div class="tf-intro">
+    <div class="tf-intro-badge">Free · 5 minutes · 20 questions</div>
+    <h1 class="tf-intro-title">Is Your HOA Board<br>Compliant?</h1>
+    <p class="tf-intro-sub">Get a personalized Davis-Stirling compliance score with specific recommendations for your California HOA board.</p>
+    <div class="tf-intro-covers">
+      <span>Financial Reporting</span>
+      <span>Meeting Procedures</span>
+      <span>Document Management</span>
+      <span>Insurance & Reserves</span>
+      <span>Elections</span>
+      <span>SB 326 Inspections</span>
     </div>
-    <input type="email" id="field-email" placeholder="Email address" required>
-    <div class="email-fields">
-      <input type="text" id="field-hoa" placeholder="HOA name (optional)">
-      <input type="text" id="field-city" placeholder="City / County (optional)">
-    </div>
-    <button class="btn btn-next" onclick="showResults()" style="width:100%;margin-top:12px;font-size:1.05rem;padding:14px;">See My Results</button>
-    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:10px;text-align:center;">We'll email your detailed results. No spam, unsubscribe anytime.</p>
+    <button class="tf-start" onclick="startAudit()">
+      Start Free Audit
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
+    </button>
+    <p class="tf-intro-note">Join 50+ California HOA board members who've taken the audit</p>
   </div>
-
-  <!-- Results -->
-  <div id="results" class="results"></div>
 </div>
 
-<footer class="footer"><p>© 2026 Bursar · Purpose-built for California HOA boards</p></footer>
+<!-- Audit Main -->
+<div id="audit-main" style="display:none;">
+  <!-- Progress -->
+  <div id="progress-wrap" class="tf-progress-wrap">
+    <div class="tf-progress-info">
+      <span id="progress-cat" class="tf-progress-cat">Financial Reporting</span>
+      <span class="tf-progress-count">Question <span id="q-num">1</span> of <span id="q-total">20</span></span>
+    </div>
+    <div class="tf-progress"><div class="tf-progress-bar" id="progress-bar"></div></div>
+  </div>
+
+  <!-- Questions -->
+  <div id="questions" class="tf-questions-container"></div>
+</div>
+
+<!-- Email Gate -->
+<div id="email-gate" class="tf-screen email-gate">
+  <div class="tf-gate">
+    <div class="tf-gate-icon">📊</div>
+    <h2>Your Results Are Ready</h2>
+    <p>Enter your info to see your personalized compliance score, gap analysis, and recommendations.</p>
+    <div class="tf-gate-fields">
+      <div class="tf-field-row">
+        <input type="text" id="field-name" placeholder="First name" autocomplete="given-name">
+        <input type="text" id="field-role" placeholder="Role (e.g. Treasurer)" autocomplete="organization-title">
+      </div>
+      <input type="email" id="field-email" placeholder="Email address" required autocomplete="email">
+      <div class="tf-field-row">
+        <input type="text" id="field-hoa" placeholder="HOA name (optional)">
+        <input type="text" id="field-city" placeholder="City / County (optional)">
+      </div>
+    </div>
+    <button class="tf-start" onclick="showResults()" style="width:100%;">
+      See My Results
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
+    </button>
+    <p class="tf-gate-note">We'll email your detailed results. No spam, unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- Results -->
+<div id="results" class="tf-screen results"></div>
 
 <script src="../js/submit.js"></script>
 <script src="../js/audit.js"></script>
