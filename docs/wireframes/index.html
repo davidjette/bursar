@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bursar — Product Wireframes</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .wf-wrap { max-width: 1000px; margin: 0 auto; padding: 120px 24px 80px; }
+    .wf-wrap h1 { font-size: 2rem; color: var(--primary); margin-bottom: 8px; font-weight: 800; letter-spacing: -0.02em; }
+    .wf-wrap > p { color: var(--text-secondary); margin-bottom: 40px; }
+
+    /* Tab nav */
+    .wf-tabs { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 0; overflow-x: auto; }
+    .wf-tab {
+      padding: 10px 18px; font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      color: var(--text-muted); border-bottom: 2px solid transparent;
+      transition: all 0.2s; white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none;
+      font-family: inherit;
+    }
+    .wf-tab:hover { color: var(--text-secondary); }
+    .wf-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* Wireframe panels */
+    .wf-panel { display: none; }
+    .wf-panel.active { display: block; }
+
+    /* Wireframe card styles */
+    .wf-screen {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; margin-bottom: 24px;
+    }
+    .wf-titlebar {
+      background: var(--bg-muted); padding: 10px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .wf-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .wf-titlebar span { font-size: 0.8rem; color: var(--text-muted); margin-left: 8px; }
+    .wf-body { padding: 24px; }
+
+    /* Sidebar layout */
+    .wf-app { display: flex; min-height: 500px; }
+    .wf-sidebar {
+      width: 220px; background: var(--bg-dark); color: #fff; padding: 20px 0;
+      flex-shrink: 0;
+    }
+    .wf-sidebar .logo-area { padding: 0 16px 20px; font-weight: 700; font-size: 1.1rem; border-bottom: 1px solid var(--bg-dark-600); margin-bottom: 12px; }
+    .wf-nav-item {
+      padding: 10px 16px; font-size: 0.9rem; cursor: pointer;
+      color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s;
+    }
+    .wf-nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+    .wf-nav-item.active { background: rgba(37,99,235,0.2); color: #fff; border-right: 2px solid var(--accent); }
+    .wf-main { flex: 1; padding: 24px; background: var(--bg-subtle); overflow: auto; }
+
+    /* Stat cards */
+    .wf-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    .wf-stat {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 16px; text-align: center;
+    }
+    .wf-stat .val { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: -0.02em; }
+    .wf-stat .label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+
+    /* Table */
+    .wf-table { width: 100%; border-collapse: collapse; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .wf-table th { background: var(--bg-muted); padding: 10px 14px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-align: left; text-transform: uppercase; letter-spacing: 0.5px; }
+    .wf-table td { padding: 12px 14px; border-top: 1px solid var(--border-light); font-size: 0.9rem; color: var(--text-secondary); }
+    .wf-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .wf-badge-green { background: var(--green-light); color: var(--green); }
+    .wf-badge-yellow { background: #fef3c7; color: #d97706; }
+    .wf-badge-red { background: #fee2e2; color: var(--red); }
+    .wf-badge-blue { background: var(--accent-light); color: var(--accent); }
+
+    /* Invoice card */
+    .wf-invoice { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .wf-invoice-info { flex: 1; }
+    .wf-invoice-info .vendor { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+    .wf-invoice-info .detail { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .wf-invoice-amount { font-weight: 700; font-size: 1.1rem; color: var(--primary); margin-right: 16px; }
+    .wf-btn { padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; }
+    .wf-btn-approve { background: var(--green); color: #fff; }
+    .wf-btn-reject { background: var(--bg-muted); color: var(--text-muted); margin-left: 6px; }
+
+    /* Calendar */
+    .wf-cal-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+    .wf-cal-date { width: 44px; height: 44px; background: var(--accent-light); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .wf-cal-date .month { font-size: 0.65rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+    .wf-cal-date .day { font-size: 1.1rem; color: var(--accent); font-weight: 800; line-height: 1; }
+    .wf-cal-text .title { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    .wf-cal-text .sub { font-size: 0.8rem; color: var(--text-muted); }
+
+    .wf-note { background: #fffbeb; border: 1px solid #fef3c7; border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.85rem; color: #92400e; margin-bottom: 20px; }
+
+    @media (max-width: 768px) {
+      .wf-app { flex-direction: column; }
+      .wf-sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 10px; }
+      .wf-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="/bursar/" class="logo">Bursar</a>
+  <div style="display:flex;align-items:center;gap:24px;">
+    <a href="/bursar/blog/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Blog</a>
+    <a href="/bursar/audit/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Audit</a>
+    <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
+  </div>
+</div></nav>
+
+<div class="wf-wrap">
+  <h1>Product Wireframes</h1>
+  <p>Interactive demos of the Bursar platform — built for California HOA boards.</p>
+
+  <div class="wf-tabs">
+    <button class="wf-tab active" onclick="showPanel('dashboard')">Dashboard</button>
+    <button class="wf-tab" onclick="showPanel('invoices')">Invoice Approval</button>
+    <button class="wf-tab" onclick="showPanel('compliance')">Compliance Calendar</button>
+    <button class="wf-tab" onclick="showPanel('documents')">Document Vault</button>
+    <button class="wf-tab" onclick="showPanel('meetings')">Meetings</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="wf-panel active" id="panel-dashboard">
+    <div class="wf-screen">
+      <div class="wf-titlebar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <span>app.bursar.io — Board Dashboard</span>
+      </div>
+      <div class="wf-app">
+        <div class="wf-sidebar">
+          <div class="logo-area">Bursar</div>
+          <div class="wf-nav-item active">📊 Dashboard</div>
+          <div class="wf-nav-item">📋 Invoices</div>
+          <div class="wf-nav-item">📅 Compliance</div>
+          <div class="wf-nav-item">🗂️ Documents</div>
+          <div class="wf-nav-item">🤝 Meetings</div>
+          <div class="wf-nav-item">👥 Members</div>
+          <div class="wf-nav-item">⚙️ Settings</div>
+        </div>
+        <div class="wf-main">
+          <h2 style="font-size:1.3rem;margin-bottom:16px;font-weight:700;">Welcome back, Scott</h2>
+          <div class="wf-stats">
+            <div class="wf-stat"><div class="val">12</div><div class="label">Pending Invoices</div></div>
+            <div class="wf-stat"><div class="val" style="color:var(--green);">87%</div><div class="label">Compliance Score</div></div>
+            <div class="wf-stat"><div class="val">3</div><div class="label">Upcoming Deadlines</div></div>
+            <div class="wf-stat"><div class="val">$42.1K</div><div class="label">Reserve Balance</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+              <h3 style="font-size:0.95rem;margin-bottom:12px;font-weight:600;">Upcoming Compliance Deadlines</h3>
+              <div class="wf-cal-item">
+                <div class="wf-cal-date"><div class="month">Mar</div><div class="day">1</div></div>
+                <div class="wf-cal-text"><div class="title">Annual Budget Disclosure</div><div class="sub">Civil Code §5300 · 14 days away</div></div>
+              </div>
+              <div class="wf-cal-item">
+                <div class="wf-cal-date"><div class="month">Mar</div><div class="day">15</div></div>
+                <div class="wf-cal-text"><div class="title">Q1 Reserve Study Review</div><div class="sub">Civil Code §5550 · 28 days away</div></div>
+              </div>
+              <div class="wf-cal-item">
+                <div class="wf-cal-date"><div class="month">Apr</div><div class="day">1</div></div>
+                <div class="wf-cal-text"><div class="title">Annual Policy Statement</div><div class="sub">Civil Code §5310 · 45 days away</div></div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-size:0.95rem;margin-bottom:12px;font-weight:600;">Recent Activity</h3>
+              <div style="font-size:0.85rem;color:var(--text-secondary);line-height:2.2;">
+                <div>✅ Invoice #1247 approved by Maria Chen — $2,340</div>
+                <div>📄 Meeting minutes uploaded — Feb 10 Board Meeting</div>
+                <div>⚠️ SB 326 inspection report due in 30 days</div>
+                <div>💳 Assessment payment received — Unit 42 — $450</div>
+                <div>📋 New maintenance request — Pool pump repair</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVOICES -->
+  <div class="wf-panel" id="panel-invoices">
+    <div class="wf-screen">
+      <div class="wf-titlebar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <span>app.bursar.io — Invoice Approval</span>
+      </div>
+      <div class="wf-app">
+        <div class="wf-sidebar">
+          <div class="logo-area">Bursar</div>
+          <div class="wf-nav-item">📊 Dashboard</div>
+          <div class="wf-nav-item active">📋 Invoices</div>
+          <div class="wf-nav-item">📅 Compliance</div>
+          <div class="wf-nav-item">🗂️ Documents</div>
+          <div class="wf-nav-item">🤝 Meetings</div>
+          <div class="wf-nav-item">👥 Members</div>
+          <div class="wf-nav-item">⚙️ Settings</div>
+        </div>
+        <div class="wf-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h2 style="font-size:1.3rem;font-weight:700;">Pending Invoices <span class="wf-badge wf-badge-blue">12</span></h2>
+            <div style="display:flex;gap:8px;">
+              <select style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;">
+                <option>All Vendors</option><option>Landscaping</option><option>Pool</option><option>Plumbing</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wf-note">⚡ AI Alert: Invoice #1251 flagged — amount is 43% higher than vendor's average. Review recommended.</div>
+
+          <div class="wf-invoice">
+            <div class="wf-invoice-info">
+              <div class="vendor">Pacific Landscaping Co.</div>
+              <div class="detail">INV-1248 · Monthly maintenance · Feb 2026 · 📸 3 photos attached</div>
+            </div>
+            <div class="wf-invoice-amount">$1,875</div>
+            <button class="wf-btn wf-btn-approve">Approve</button>
+            <button class="wf-btn wf-btn-reject">Reject</button>
+          </div>
+          <div class="wf-invoice">
+            <div class="wf-invoice-info">
+              <div class="vendor">Bay Area Pool Services</div>
+              <div class="detail">INV-1249 · Equipment repair · Feb 2026 · 📸 5 photos attached</div>
+            </div>
+            <div class="wf-invoice-amount">$2,340</div>
+            <button class="wf-btn wf-btn-approve">Approve</button>
+            <button class="wf-btn wf-btn-reject">Reject</button>
+          </div>
+          <div class="wf-invoice" style="border-left:3px solid #f59e0b;">
+            <div class="wf-invoice-info">
+              <div class="vendor">⚠️ Quick Fix Plumbing LLC</div>
+              <div class="detail">INV-1251 · Emergency repair · Feb 2026 · 📸 1 photo · AI FLAGGED</div>
+            </div>
+            <div class="wf-invoice-amount" style="color:var(--orange);">$4,200</div>
+            <button class="wf-btn wf-btn-approve">Approve</button>
+            <button class="wf-btn wf-btn-reject">Reject</button>
+          </div>
+          <div class="wf-invoice">
+            <div class="wf-invoice-info">
+              <div class="vendor">SecureGate Systems</div>
+              <div class="detail">INV-1250 · Gate sensor replacement · Feb 2026</div>
+            </div>
+            <div class="wf-invoice-amount">$890</div>
+            <button class="wf-btn wf-btn-approve">Approve</button>
+            <button class="wf-btn wf-btn-reject">Reject</button>
+          </div>
+
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:16px;">Co-signer: Maria Chen (Treasurer) · Awaiting your approval on 4 invoices</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE -->
+  <div class="wf-panel" id="panel-compliance">
+    <div class="wf-screen">
+      <div class="wf-titlebar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <span>app.bursar.io — Compliance Calendar</span>
+      </div>
+      <div class="wf-app">
+        <div class="wf-sidebar">
+          <div class="logo-area">Bursar</div>
+          <div class="wf-nav-item">📊 Dashboard</div>
+          <div class="wf-nav-item">📋 Invoices</div>
+          <div class="wf-nav-item active">📅 Compliance</div>
+          <div class="wf-nav-item">🗂️ Documents</div>
+          <div class="wf-nav-item">🤝 Meetings</div>
+          <div class="wf-nav-item">👥 Members</div>
+          <div class="wf-nav-item">⚙️ Settings</div>
+        </div>
+        <div class="wf-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h2 style="font-size:1.3rem;font-weight:700;">Davis-Stirling Compliance</h2>
+            <div class="wf-badge wf-badge-green" style="font-size:0.9rem;padding:6px 12px;">87% Compliant</div>
+          </div>
+
+          <table class="wf-table" style="margin-bottom:24px;">
+            <thead><tr>
+              <th>Requirement</th><th>Status</th><th>Due Date</th><th>Code Section</th><th>Action</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600;">Annual Budget Disclosure</td>
+                <td><span class="wf-badge wf-badge-yellow">Due Soon</span></td>
+                <td>Mar 1, 2026</td><td>§5300</td>
+                <td><button class="wf-btn" style="background:var(--accent);color:#fff;font-size:0.8rem;padding:6px 12px;">Generate</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">Reserve Study Update</td>
+                <td><span class="wf-badge wf-badge-green">Current</span></td>
+                <td>Jun 15, 2027</td><td>§5550</td>
+                <td style="color:var(--text-muted);font-size:0.85rem;">Up to date</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">Annual Policy Statement</td>
+                <td><span class="wf-badge wf-badge-yellow">Due Soon</span></td>
+                <td>Apr 1, 2026</td><td>§5310</td>
+                <td><button class="wf-btn" style="background:var(--accent);color:#fff;font-size:0.8rem;padding:6px 12px;">Generate</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">Election Procedures</td>
+                <td><span class="wf-badge wf-badge-green">Current</span></td>
+                <td>Nov 2026</td><td>§5100-5145</td>
+                <td style="color:var(--text-muted);font-size:0.85rem;">Next election</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">SB 326 Balcony Inspections</td>
+                <td><span class="wf-badge wf-badge-red">Overdue</span></td>
+                <td>Jan 1, 2026</td><td>§5551</td>
+                <td><button class="wf-btn" style="background:var(--red);color:#fff;font-size:0.8rem;padding:6px 12px;">Schedule</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">Financial Records Retention</td>
+                <td><span class="wf-badge wf-badge-green">Current</span></td>
+                <td>Ongoing</td><td>§5210</td>
+                <td style="color:var(--text-muted);font-size:0.85rem;">7+ years stored</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;">D&O Insurance</td>
+                <td><span class="wf-badge wf-badge-green">Current</span></td>
+                <td>Renewal: Sep 2026</td><td>—</td>
+                <td style="color:var(--text-muted);font-size:0.85rem;">Policy on file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div class="wf-panel" id="panel-documents">
+    <div class="wf-screen">
+      <div class="wf-titlebar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <span>app.bursar.io — Document Vault</span>
+      </div>
+      <div class="wf-app">
+        <div class="wf-sidebar">
+          <div class="logo-area">Bursar</div>
+          <div class="wf-nav-item">📊 Dashboard</div>
+          <div class="wf-nav-item">📋 Invoices</div>
+          <div class="wf-nav-item">📅 Compliance</div>
+          <div class="wf-nav-item active">🗂️ Documents</div>
+          <div class="wf-nav-item">🤝 Meetings</div>
+          <div class="wf-nav-item">👥 Members</div>
+          <div class="wf-nav-item">⚙️ Settings</div>
+        </div>
+        <div class="wf-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h2 style="font-size:1.3rem;font-weight:700;">Document Vault</h2>
+            <div style="display:flex;gap:8px;">
+              <input type="text" placeholder="Search documents..." style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;width:240px;font-family:inherit;">
+              <button class="wf-btn" style="background:var(--accent);color:#fff;">Upload</button>
+            </div>
+          </div>
+
+          <table class="wf-table">
+            <thead><tr><th>Document</th><th>Category</th><th>Updated</th><th>Version</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:600;">📄 CC&Rs — Amended 2024</td><td>Governing Docs</td><td>Sep 12, 2024</td><td>v3.1</td></tr>
+              <tr><td style="font-weight:600;">📄 Bylaws</td><td>Governing Docs</td><td>Mar 1, 2023</td><td>v2.0</td></tr>
+              <tr><td style="font-weight:600;">📊 2025 Reserve Study</td><td>Financial</td><td>Jan 15, 2025</td><td>v1.0</td></tr>
+              <tr><td style="font-weight:600;">📋 2025 Annual Budget</td><td>Financial</td><td>Nov 30, 2025</td><td>v1.0</td></tr>
+              <tr><td style="font-weight:600;">📝 Board Meeting Minutes — Feb 2026</td><td>Minutes</td><td>Feb 12, 2026</td><td>v1.0</td></tr>
+              <tr><td style="font-weight:600;">🛡️ D&O Insurance Policy</td><td>Insurance</td><td>Sep 1, 2025</td><td>—</td></tr>
+              <tr><td style="font-weight:600;">📋 Vendor Contract — Pacific Landscaping</td><td>Contracts</td><td>Jan 1, 2026</td><td>v1.0</td></tr>
+              <tr><td style="font-weight:600;">🏗️ SB 326 Inspection Report</td><td>Inspections</td><td>Pending</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEETINGS -->
+  <div class="wf-panel" id="panel-meetings">
+    <div class="wf-screen">
+      <div class="wf-titlebar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <span>app.bursar.io — Meeting Intelligence</span>
+      </div>
+      <div class="wf-app">
+        <div class="wf-sidebar">
+          <div class="logo-area">Bursar</div>
+          <div class="wf-nav-item">📊 Dashboard</div>
+          <div class="wf-nav-item">📋 Invoices</div>
+          <div class="wf-nav-item">📅 Compliance</div>
+          <div class="wf-nav-item">🗂️ Documents</div>
+          <div class="wf-nav-item active">🤝 Meetings</div>
+          <div class="wf-nav-item">👥 Members</div>
+          <div class="wf-nav-item">⚙️ Settings</div>
+        </div>
+        <div class="wf-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h2 style="font-size:1.3rem;font-weight:700;">Meetings</h2>
+            <button class="wf-btn" style="background:var(--accent);color:#fff;">+ Schedule Meeting</button>
+          </div>
+
+          <div class="wf-note">📅 Next meeting: Board Meeting — Mar 12, 2026 at 7:00 PM · Notice sent to all members (4+ days ahead ✅)</div>
+
+          <h3 style="font-size:0.95rem;margin-bottom:12px;font-weight:600;">Auto-Generated Agenda (Mar 12)</h3>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:24px;font-size:0.9rem;color:var(--text-secondary);line-height:2;">
+            1. Call to Order & Quorum Verification<br>
+            2. Approval of Feb 10 Meeting Minutes<br>
+            3. Financial Report — Treasurer (Maria Chen)<br>
+            4. <strong>Pending Invoice Review — 12 invoices ($14,305)</strong><br>
+            5. Compliance Update — Annual Budget Disclosure (due Mar 1)<br>
+            6. <strong>SB 326 Balcony Inspection — Vendor Selection</strong><br>
+            7. Architectural Review — Unit 17 patio enclosure request<br>
+            8. Open Forum — Homeowner Q&A<br>
+            9. Adjournment
+          </div>
+
+          <h3 style="font-size:0.95rem;margin-bottom:12px;font-weight:600;">Past Meetings</h3>
+          <table class="wf-table">
+            <thead><tr><th>Date</th><th>Type</th><th>Attendees</th><th>Minutes</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Feb 10, 2026</td><td>Board Meeting</td><td>5/7 (quorum ✅)</td>
+                <td><span class="wf-badge wf-badge-green">Published</span></td>
+                <td>3 completed, 1 pending</td>
+              </tr>
+              <tr>
+                <td>Jan 13, 2026</td><td>Board Meeting</td><td>6/7 (quorum ✅)</td>
+                <td><span class="wf-badge wf-badge-green">Published</span></td>
+                <td>5 completed</td>
+              </tr>
+              <tr>
+                <td>Dec 9, 2025</td><td>Annual Meeting</td><td>42 members</td>
+                <td><span class="wf-badge wf-badge-green">Published</span></td>
+                <td>Election results filed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><p>© 2026 Bursar · Product wireframes — not final design</p></footer>
+
+<script>
+function showPanel(name) {
+  document.querySelectorAll('.wf-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

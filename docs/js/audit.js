@@ -220,8 +220,14 @@ function showResults() {
     city: document.getElementById('field-city').value,
   };
 
-  // Log submission (replace with real endpoint)
-  console.log('Audit submission:', { ...info, answers, score: calculateScore() });
+  // Submit to backend
+  const { earned, possible, pct, gaps } = calculateScore();
+  const zone = pct >= 80 ? 'Green' : pct >= 50 ? 'Yellow' : 'Red';
+  const utm = typeof getUTM === 'function' ? getUTM() : {};
+  submitData('audit', {
+    ...info, scorePct: pct, scoreEarned: earned, scorePossible: possible,
+    zone, gapCount: gaps.length, answers, ...utm,
+  });
 
   // Track conversion
   if (typeof gtag !== 'undefined') {
@@ -233,7 +239,6 @@ function showResults() {
   }
 
   document.getElementById('email-gate').classList.remove('active');
-  const { earned, possible, pct, gaps } = calculateScore();
 
   let zone, zoneClass, headline, verdict;
   if (pct >= 80) {
