@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Bursar — Built for California HOA Boards — Bursar Blog</title>
   <meta name="description" content="We're building the operations platform California HOA board members deserve. Here's why.">
-  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
   <style>
     .post { max-width: 680px; margin: 0 auto; padding: 120px 24px 80px; }
     .post h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
-    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; }
+    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .post-tag { background: var(--bg-muted); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
     .post-body { font-size: 1.05rem; line-height: 1.85; }
     .post-body h2 { font-size: 1.4rem; margin: 40px 0 14px; color: var(--primary); font-weight: 700; letter-spacing: -0.01em; }
     .post-body h3 { font-size: 1.15rem; margin: 32px 0 10px; color: var(--primary); font-weight: 700; }
@@ -21,6 +23,11 @@
     .post-body strong { color: var(--text); font-weight: 600; }
     .post-body a { color: var(--accent); text-decoration: none; }
     .post-body a:hover { text-decoration: underline; }
+    .post-body table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.92rem; }
+    .post-body th { background: var(--bg-muted); padding: 10px 14px; text-align: left; font-weight: 600; color: var(--primary); border-bottom: 2px solid var(--border); }
+    .post-body td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .post-body tr:hover td { background: var(--bg-subtle); }
+    .post-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     .post-cta { background: var(--bg-subtle); padding: 36px; border-radius: var(--radius); margin-top: 48px; text-align: center; border: 1px solid var(--border); }
     .post-cta h3 { margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; color: var(--primary); }
     .post-cta p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px; }
@@ -31,18 +38,18 @@
 <body>
 <nav class="nav"><div class="nav-inner">
   <a href="/bursar/" class="logo">Bursar</a>
-  <div style="display:flex;align-items:center;gap:24px;">
-    <a href="/bursar/blog/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Blog</a>
-    <a href="/bursar/audit/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Audit</a>
+  <div class="nav-links">
+    <a href="/bursar/blog/" class="nav-link">Blog</a>
+    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
+    <a href="/bursar/wireframes/" class="nav-link">Product</a>
     <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>
 <article class="post">
   <a href="/bursar/blog/" class="back-link">← Back to Blog</a>
   <h1>Welcome to Bursar — Built for California HOA Boards</h1>
-  <div class="post-meta">2026-02-14 · Bursar Team · <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">announcement</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">california</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">hoa</span></div>
-  <div class="post-body"><h1>Welcome to Bursar — Built for California HOA Boards</h1>
-<p>If you&#39;re a volunteer HOA board member in California, you already know: the tools available to you are built for property managers, not for you.</p>
+  <div class="post-meta">February 14, 2026 · Bursar Team · <span class="post-tag">announcement</span> <span class="post-tag">california</span> <span class="post-tag">hoa</span></div>
+  <div class="post-body"><p>If you&#39;re a volunteer HOA board member in California, you already know: the tools available to you are built for property managers, not for you.</p>
 <p>You&#39;re expected to manage compliance with the Davis-Stirling Common Interest Development Act, approve dozens of invoices, track reserve studies, run elections — all while doing this <strong>for free</strong> in your spare time.</p>
 <h2>The Problem We&#39;re Solving</h2>
 <p>Most HOA software assumes you have a property management company. But <strong>70% of California HOAs are self-managed</strong> by volunteer boards. These boards face:</p>

@@ -37,8 +37,33 @@ const posts = fs.readdirSync(POSTS_DIR)
 
 console.log(`Found ${posts.length} posts`);
 
+// Format date nicely
+function formatDate(dateInput) {
+  const d = dateInput instanceof Date ? dateInput : new Date(dateInput + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// Strip leading H1 from markdown HTML if it duplicates the title
+function stripLeadingH1(html, title) {
+  const match = html.match(/^<h1[^>]*>(.*?)<\/h1>\s*/i);
+  if (match) {
+    const h1Text = match[1].replace(/<[^>]+>/g, '').trim();
+    const titleText = title.replace(/&#39;/g, "'").replace(/&amp;/g, '&').trim();
+    if (h1Text === titleText || h1Text.toLowerCase() === titleText.toLowerCase()) {
+      return html.slice(match[0].length);
+    }
+  }
+  return html;
+}
+
 // HTML template
 function postPage(post) {
+  const cleanBody = stripLeadingH1(post.html, post.title);
+  const niceDate = formatDate(post.date);
+  const tags = post.tags.length ? ' · ' + post.tags.map(t =>
+    `<span class="post-tag">${t}</span>`
+  ).join(' ') : '';
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,11 +71,13 @@ function postPage(post) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${post.title} — Bursar Blog</title>
   <meta name="description" content="${post.excerpt}">
-  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
   <style>
     .post { max-width: 680px; margin: 0 auto; padding: 120px 24px 80px; }
     .post h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
-    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; }
+    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .post-tag { background: var(--bg-muted); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
     .post-body { font-size: 1.05rem; line-height: 1.85; }
     .post-body h2 { font-size: 1.4rem; margin: 40px 0 14px; color: var(--primary); font-weight: 700; letter-spacing: -0.01em; }
     .post-body h3 { font-size: 1.15rem; margin: 32px 0 10px; color: var(--primary); font-weight: 700; }
@@ -62,6 +89,11 @@ function postPage(post) {
     .post-body strong { color: var(--text); font-weight: 600; }
     .post-body a { color: var(--accent); text-decoration: none; }
     .post-body a:hover { text-decoration: underline; }
+    .post-body table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.92rem; }
+    .post-body th { background: var(--bg-muted); padding: 10px 14px; text-align: left; font-weight: 600; color: var(--primary); border-bottom: 2px solid var(--border); }
+    .post-body td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .post-body tr:hover td { background: var(--bg-subtle); }
+    .post-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     .post-cta { background: var(--bg-subtle); padding: 36px; border-radius: var(--radius); margin-top: 48px; text-align: center; border: 1px solid var(--border); }
     .post-cta h3 { margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; color: var(--primary); }
     .post-cta p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px; }
@@ -72,17 +104,18 @@ function postPage(post) {
 <body>
 <nav class="nav"><div class="nav-inner">
   <a href="/bursar/" class="logo">Bursar</a>
-  <div style="display:flex;align-items:center;gap:24px;">
-    <a href="/bursar/blog/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Blog</a>
-    <a href="/bursar/audit/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Audit</a>
+  <div class="nav-links">
+    <a href="/bursar/blog/" class="nav-link">Blog</a>
+    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
+    <a href="/bursar/wireframes/" class="nav-link">Product</a>
     <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>
 <article class="post">
   <a href="/bursar/blog/" class="back-link">← Back to Blog</a>
   <h1>${post.title}</h1>
-  <div class="post-meta">${post.date} · ${post.author}${post.tags.length ? ' · ' + post.tags.map(t => '<span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">' + t + '</span>').join(' ') : ''}</div>
-  <div class="post-body">${post.html}</div>
+  <div class="post-meta">${niceDate} · ${post.author}${tags}</div>
+  <div class="post-body">${cleanBody}</div>
   <div class="post-cta">
     <h3>Is your HOA board compliant?</h3>
     <p>Take our free 5-minute compliance assessment and get personalized results.</p>
@@ -100,7 +133,7 @@ function indexPage(posts) {
       <a href="/bursar/blog/${p.slug}.html" style="text-decoration:none;">
         <h3 style="color:var(--primary);font-size:1.25rem;margin-bottom:8px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;">${p.title}</h3>
       </a>
-      <div style="color:var(--text-muted);font-size:0.8rem;margin-bottom:10px;font-weight:500;">${p.date} · ${p.author}</div>
+      <div style="color:var(--text-muted);font-size:0.8rem;margin-bottom:10px;font-weight:500;">${formatDate(p.date)} · ${p.author}</div>
       <p style="color:var(--text-secondary);font-size:0.95rem;margin-bottom:12px;line-height:1.65;">${p.excerpt}</p>
       <a href="/bursar/blog/${p.slug}.html" style="color:var(--accent);font-size:0.9rem;font-weight:500;text-decoration:none;">Read article →</a>
     </article>`).join('\n');
@@ -114,13 +147,15 @@ function indexPage(posts) {
   <meta name="description" content="Insights for California HOA board members on compliance, operations, and best practices.">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="alternate" type="application/rss+xml" href="/bursar/blog/feed.xml" title="Bursar Blog">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
   <a href="/bursar/" class="logo">Bursar</a>
-  <div style="display:flex;align-items:center;gap:24px;">
-    <a href="/bursar/blog/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Blog</a>
-    <a href="/bursar/audit/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Audit</a>
+  <div class="nav-links">
+    <a href="/bursar/blog/" class="nav-link">Blog</a>
+    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
+    <a href="/bursar/wireframes/" class="nav-link">Product</a>
     <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>

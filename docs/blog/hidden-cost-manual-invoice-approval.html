@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Hidden Cost of Manual Invoice Approval for HOA Boards — Bursar Blog</title>
   <meta name="description" content="Most HOA boards spend 6+ hours every week processing invoices manually. Here's what that really costs your volunteer board members—and how much risk you're carrying without realizing it.">
-  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
   <style>
     .post { max-width: 680px; margin: 0 auto; padding: 120px 24px 80px; }
     .post h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
-    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; }
+    .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-weight: 500; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .post-tag { background: var(--bg-muted); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
     .post-body { font-size: 1.05rem; line-height: 1.85; }
     .post-body h2 { font-size: 1.4rem; margin: 40px 0 14px; color: var(--primary); font-weight: 700; letter-spacing: -0.01em; }
     .post-body h3 { font-size: 1.15rem; margin: 32px 0 10px; color: var(--primary); font-weight: 700; }
@@ -21,6 +23,11 @@
     .post-body strong { color: var(--text); font-weight: 600; }
     .post-body a { color: var(--accent); text-decoration: none; }
     .post-body a:hover { text-decoration: underline; }
+    .post-body table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.92rem; }
+    .post-body th { background: var(--bg-muted); padding: 10px 14px; text-align: left; font-weight: 600; color: var(--primary); border-bottom: 2px solid var(--border); }
+    .post-body td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .post-body tr:hover td { background: var(--bg-subtle); }
+    .post-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     .post-cta { background: var(--bg-subtle); padding: 36px; border-radius: var(--radius); margin-top: 48px; text-align: center; border: 1px solid var(--border); }
     .post-cta h3 { margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; color: var(--primary); }
     .post-cta p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px; }
@@ -31,18 +38,18 @@
 <body>
 <nav class="nav"><div class="nav-inner">
   <a href="/bursar/" class="logo">Bursar</a>
-  <div style="display:flex;align-items:center;gap:24px;">
-    <a href="/bursar/blog/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Blog</a>
-    <a href="/bursar/audit/" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;">Audit</a>
+  <div class="nav-links">
+    <a href="/bursar/blog/" class="nav-link">Blog</a>
+    <a href="/bursar/audit/" class="nav-link">Free Audit</a>
+    <a href="/bursar/wireframes/" class="nav-link">Product</a>
     <a href="/bursar/#waitlist" class="nav-cta">Join Waitlist</a>
   </div>
 </div></nav>
 <article class="post">
   <a href="/bursar/blog/" class="back-link">← Back to Blog</a>
   <h1>The Hidden Cost of Manual Invoice Approval for HOA Boards</h1>
-  <div class="post-meta">Fri Feb 13 2026 16:00:00 GMT-0800 (Pacific Standard Time) · Bursar Team · <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">invoice approval</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">HOA board</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">operations</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">efficiency</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">vendor management</span> <span style="background:var(--bg-muted);padding:2px 8px;border-radius:4px;font-size:0.8rem;">fraud prevention</span></div>
-  <div class="post-body"><h1>The Hidden Cost of Manual Invoice Approval for HOA Boards</h1>
-<p>You&#39;re a volunteer board member. You have a full-time job, a family, and a life outside your HOA. But every week, you&#39;re spending 6+ hours:</p>
+  <div class="post-meta">February 13, 2026 · Bursar Team · <span class="post-tag">invoice approval</span> <span class="post-tag">HOA board</span> <span class="post-tag">operations</span> <span class="post-tag">efficiency</span> <span class="post-tag">vendor management</span> <span class="post-tag">fraud prevention</span></div>
+  <div class="post-body"><p>You&#39;re a volunteer board member. You have a full-time job, a family, and a life outside your HOA. But every week, you&#39;re spending 6+ hours:</p>
 <ul>
 <li>Digging through email to match invoices to approved bids</li>
 <li>Chasing down your co-signer for two-signature authorization</li>
