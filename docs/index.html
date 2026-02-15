@@ -234,11 +234,13 @@
 <script src="js/submit.js"></script>
 <script src="js/main.js"></script>
 <script>
-// Scroll reveal
+// Scroll reveal — with fallback to ensure content is always visible
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+// Fallback: make everything visible after 2s in case observer doesn't fire
+setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 2000);
 
 // FAQ accordion
 document.querySelectorAll('.faq-q').forEach(btn => {
