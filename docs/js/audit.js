@@ -512,7 +512,11 @@ function showPayment(zone, pct) {
       <div class="payment-card">
         <div class="payment-card-header">
           <span class="payment-card-title">${planName}</span>
-          <span class="payment-card-price">$${price}<span>/mo</span></span>
+          <span class="payment-card-price">$${price}<span> one-time</span></span>
+        </div>
+        <div class="payment-base-plan">
+          <span class="payment-base-label">Base Platform</span>
+          <span class="payment-base-price">$35<span>/seat/month</span></span>
         </div>
         <ul class="payment-features">
           ${features.map(f => '<li>' + f + '</li>').join('')}
@@ -520,7 +524,7 @@ function showPayment(zone, pct) {
       </div>
 
       <button class="payment-btn" onclick="handleCheckout('${zone}', ${price})">
-        Get Started — $${price}/mo
+        Get Started — $${price} setup + $35/seat/mo
       </button>
       <p class="payment-note">🔒 Secure checkout · Cancel anytime · 30-day money-back guarantee</p>
     </div>
