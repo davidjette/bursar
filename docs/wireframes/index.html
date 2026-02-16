@@ -97,6 +97,16 @@
       .wf-app { flex-direction: column; }
       .wf-sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 10px; }
       .wf-stats { grid-template-columns: 1fr 1fr; }
+      .wf-table th, .wf-table td { padding: 8px 10px; font-size: 0.8rem; }
+    }
+    @media (max-width: 375px) {
+      .wf-wrap { padding: 100px 16px 60px; }
+      .wf-wrap h1 { font-size: 1.5rem; }
+      .wf-stats { grid-template-columns: 1fr; }
+      .wf-tabs { gap: 0; }
+      .wf-tab { padding: 8px 12px; font-size: 0.8rem; }
+      .wf-invoice { flex-direction: column; gap: 8px; align-items: flex-start; }
+      .wf-invoice-amount { margin-right: 0; }
     }
   </style>
   <!-- Google tag (gtag.js) -->
@@ -123,12 +133,12 @@
   <h1>Product Wireframes</h1>
   <p>Interactive demos of the Bursar platform — built for California HOA boards.</p>
 
-  <div class="wf-tabs">
-    <button class="wf-tab active" onclick="showPanel('dashboard')">Dashboard</button>
-    <button class="wf-tab" onclick="showPanel('invoices')">Invoice Approval</button>
-    <button class="wf-tab" onclick="showPanel('compliance')">Compliance Calendar</button>
-    <button class="wf-tab" onclick="showPanel('documents')">Document Vault</button>
-    <button class="wf-tab" onclick="showPanel('meetings')">Meetings</button>
+  <div class="wf-tabs" role="tablist" aria-label="Product wireframes">
+    <button class="wf-tab active" role="tab" aria-selected="true" data-panel="dashboard" onclick="showPanel('dashboard')">Dashboard</button>
+    <button class="wf-tab" role="tab" aria-selected="false" data-panel="invoices" onclick="showPanel('invoices')">Invoice Approval</button>
+    <button class="wf-tab" role="tab" aria-selected="false" data-panel="compliance" onclick="showPanel('compliance')">Compliance Calendar</button>
+    <button class="wf-tab" role="tab" aria-selected="false" data-panel="documents" onclick="showPanel('documents')">Document Vault</button>
+    <button class="wf-tab" role="tab" aria-selected="false" data-panel="meetings" onclick="showPanel('meetings')">Meetings</button>
   </div>
 
   <!-- DASHBOARD -->
@@ -457,9 +467,17 @@
 <script>
 function showPanel(name) {
   document.querySelectorAll('.wf-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.wf-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
   document.getElementById('panel-' + name).classList.add('active');
-  event.target.classList.add('active');
+  // Find the clicked tab reliably (handles clicks on child elements)
+  var tab = document.querySelector('.wf-tab[data-panel="' + name + '"]');
+  if (tab) {
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+  }
 }
 </script>
 </body>
