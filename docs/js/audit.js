@@ -320,6 +320,25 @@ function showResults() {
     });
   }
 
+  // GA4: email_gate_submit event (per funnel spec)
+  gtag('event', 'email_gate_submit', {
+    zone: zone,
+    score_pct: pct,
+    gap_count: gaps.length,
+    email_domain: emailDomain
+  });
+
+  // Persist audit results to localStorage for success page retrieval
+  const RESULTS_KEY = 'bursar_audit_results';
+  try {
+    localStorage.setItem(RESULTS_KEY, JSON.stringify({
+      zone, score_pct: pct, gap_count: gaps.length,
+      plan_price: zone === 'Red' ? 149 : zone === 'Yellow' ? 99 : 49,
+      timestamp: new Date().toISOString(),
+      email: email
+    }));
+  } catch(e) {}
+
   document.getElementById('email-gate').classList.remove('active');
   document.getElementById('email-gate').style.display = 'none';
 
@@ -400,6 +419,16 @@ function showResults() {
       <p class="results-email-note">We'll send your detailed results to <strong>${email}</strong></p>
     </div>
   `;
+
+  // GA4: view_results event (per funnel spec)
+  const planPrice = zone === 'Red' ? 149 : zone === 'Yellow' ? 99 : 49;
+  gtag('event', 'view_results', {
+    zone: zone,
+    score_pct: pct,
+    gap_count: gaps.length,
+    plan_price: planPrice,
+    result_time_seconds: elapsed()
+  });
 
   // Animate score counter
   animateScore(pct);
