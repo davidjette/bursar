@@ -157,8 +157,12 @@ body {
 }
 .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease infinite; }
 .hero h1 {
-  font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 900; line-height: 1.08;
-  max-width: 760px; margin: 0 auto 20px; color: var(--primary);
+  font-size: clamp(2.4rem, 5vw, 3.75rem); /* Increased max from 3.6rem */
+  font-weight: 900;
+  line-height: 1.08;
+  max-width: 800px;
+  margin: 0 auto var(--space-5);
+  color: var(--primary);
   letter-spacing: -0.04em;
 }
 .hero .gradient-text {
@@ -289,36 +293,44 @@ body {
 .feature-row {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+  padding: var(--space-6);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+.feature-row:hover {
+  background: var(--bg-subtle);
+  transform: translateX(4px);
 }
 .feature-icon {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
   background: var(--accent-light);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--shadow-sm);
 }
 .feature-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: var(--accent);
   stroke-width: 2;
 }
 .feature-text h3 {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--primary);
   margin-bottom: var(--space-2);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 .feature-text p {
   color: var(--text-secondary);
-  font-size: var(--text-sm);
-  line-height: 1.65;
+  font-size: var(--text-base);
+  line-height: 1.7;
 }
 
 /* ── TESTIMONIAL ── */
@@ -362,10 +374,22 @@ body {
   letter-spacing: 0.02em;
 }
 .pricing .price {
-  font-size: 4rem; font-weight: 900; color: var(--primary); margin: 16px 0 4px;
-  letter-spacing: -0.05em; line-height: 1;
+  font-size: var(--text-6xl); /* 3.75rem / 60px */
+  font-weight: 900;
+  color: var(--primary);
+  margin: var(--space-4) 0 var(--space-1);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-1);
 }
-.pricing .price span { font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
+.pricing .price span {
+  font-size: var(--text-xl); /* 1.25rem / 20px - much more readable */
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 .pricing .price-note { color: var(--text-muted); margin-bottom: 24px; font-size: 0.88rem; }
 .pricing-features {
   text-align: left; margin: 24px 0;
@@ -831,5 +855,33 @@ body {
 }
 .audit-cta:hover {
   background: #047857;
+}
+
+/* ── VARIANT-SPECIFIC IMPROVEMENTS ── */
+
+/* Compliance variant needs more authority/seriousness */
+body[data-variant="c-compliance"] .hero {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-subtle) 100%);
+}
+
+body[data-variant="c-compliance"] .hero h1 {
+  color: var(--red);
+  font-size: clamp(2.4rem, 5vw, 4rem); /* Even larger for urgency */
+}
+
+body[data-variant="c-compliance"] .pain {
+  background: var(--bg);
+  border-top: 3px solid var(--red);
+  padding-top: var(--space-16);
+}
+
+/* Platform variant needs cleaner sections */
+body[data-variant="a-platform"] .features {
+  background: var(--bg);
+  padding: var(--space-20) var(--space-6);
+}
+
+body[data-variant="a-platform"] .hero h1 {
+  max-width: 680px;
 }
 }
