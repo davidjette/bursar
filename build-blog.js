@@ -11,7 +11,7 @@ const { marked } = require('marked');
 
 const POSTS_DIR = path.join(__dirname, 'blog/posts');
 const OUT_DIR = path.join(__dirname, 'docs/blog');
-const SITE_URL = 'https://davidjette.github.io/bursar';
+const SITE_URL = 'https://usebursar.com';
 
 // Ensure output dir
 fs.mkdirSync(OUT_DIR, { recursive: true });
