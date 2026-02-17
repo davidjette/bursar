@@ -177,24 +177,47 @@ body {
 
 /* ── CTA FORM ── */
 .cta-box {
-  max-width: 440px; margin: 0 auto;
-  display: flex; gap: 8px;
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch; /* Ensure equal height */
 }
 .cta-box input {
-  flex: 1; padding: 15px 18px; border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm); font-size: 0.95rem;
-  font-family: inherit; transition: all var(--transition);
-  background: var(--bg);
-}
-.cta-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
-.cta-box button {
-  background: var(--accent); color: #fff; border: none;
-  padding: 15px 28px; border-radius: var(--radius-sm);
-  font-weight: 700; font-size: 0.95rem; cursor: pointer;
-  white-space: nowrap; transition: all var(--transition);
+  flex: 1;
+  padding: 15px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
   font-family: inherit;
+  transition: all var(--transition);
+  background: var(--bg);
+  height: auto; /* Let flex control height */
 }
-.cta-box button:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-accent); }
+.cta-box input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.cta-box button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 15px 28px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+  font-family: inherit;
+  height: auto; /* Match input height */
+}
+.cta-box button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-accent);
+}
 .cta-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 16px; }
 
 /* ── SOCIAL PROOF BAR ── */
@@ -877,8 +900,9 @@ body[data-variant="c-compliance"] .hero {
 }
 
 body[data-variant="c-compliance"] .hero h1 {
-  color: var(--red);
-  font-size: clamp(2.4rem, 5vw, 4rem); /* Even larger for urgency */
+  color: var(--primary); /* Keep dark for professionalism, not red */
+  font-size: clamp(2.4rem, 5vw, 4rem); /* Larger for impact */
+  font-weight: 900;
 }
 
 body[data-variant="c-compliance"] .pain {
