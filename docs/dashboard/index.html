@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<footer class="footer"><p>&copy; 2026 Bursar &middot; Internal analytics dashboard</p></footer>
+<footer class="footer"><p>&copy; <span class="footer-year">2026</span> Bursar &middot; Internal analytics dashboard</p></footer>
 
 <script>
 // Data source: replace with Typeform API or Google Sheets fetch
@@ -213,5 +213,6 @@ async function render() {
 
 render();
 </script>
+<script>document.querySelectorAll('.footer-year').forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>
