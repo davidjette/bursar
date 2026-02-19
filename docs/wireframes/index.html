@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -462,7 +462,7 @@
   </div>
 </div>
 
-<footer class="footer"><p>© 2026 Bursar · Product wireframes — not final design</p></footer>
+<footer class="footer"><p>© <span class="footer-year">2026</span> Bursar · Product wireframes — not final design</p></footer>
 
 <script>
 function showPanel(name) {
@@ -480,5 +480,6 @@ function showPanel(name) {
   }
 }
 </script>
+<script>document.querySelectorAll('.footer-year').forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>

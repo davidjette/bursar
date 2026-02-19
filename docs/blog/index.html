@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -59,6 +59,7 @@
       <a href="/blog/welcome-to-bursar.html" style="color:var(--accent);font-size:0.9rem;font-weight:500;text-decoration:none;">Read article →</a>
     </article>
 </div>
-<footer class="footer"><p>© 2026 Bursar · Purpose-built for California HOA boards</p></footer>
+<footer class="footer"><p>© <span class="footer-year">2026</span> Bursar · Purpose-built for California HOA boards</p></footer>
+<script>document.querySelectorAll('.footer-year').forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>

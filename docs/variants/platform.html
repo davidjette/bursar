@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -165,10 +165,11 @@
 </div>
 
 <footer class="footer">
-  <p>© 2026 Bursar · Purpose-built for California HOA boards</p>
+  <p>© <span class="footer-year">2026</span> Bursar · Purpose-built for California HOA boards</p>
 </footer>
 
 <script src="../js/submit.js"></script>
 <script src="../js/main.js"></script>
+<script>document.querySelectorAll('.footer-year').forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>
