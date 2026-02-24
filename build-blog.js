@@ -122,7 +122,7 @@ function postPage(post) {
     <a href="/audit/" class="nav-cta" style="display:inline-block;text-decoration:none;padding:12px 28px;">Take Free Audit →</a>
   </div>
 </article>
-<footer class="footer"><p>© 2026 Bursar · Purpose-built for California HOA boards</p></footer>
+<footer class="footer"><p>© ${new Date().getFullYear()} Bursar · Purpose-built for California HOA boards</p></footer>
 </body>
 </html>`;
 }
@@ -164,7 +164,7 @@ function indexPage(posts) {
   <p style="color:var(--text-secondary);margin-bottom:8px;font-size:1rem;">Insights for California HOA board members on compliance, operations, and best practices.</p>
   ${posts.length === 0 ? '<p style="color:var(--text-muted);margin-top:40px;">Coming soon — stay tuned.</p>' : cards}
 </div>
-<footer class="footer"><p>© 2026 Bursar · Purpose-built for California HOA boards</p></footer>
+<footer class="footer"><p>© ${new Date().getFullYear()} Bursar · Purpose-built for California HOA boards</p></footer>
 </body>
 </html>`;
 }
